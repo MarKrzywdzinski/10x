@@ -56,6 +56,7 @@ Focus on important facts, definitions, concepts, and relationships.`);
   }
 
   async generateFlashcards(sourceText: string): Promise<GenerationCreateResponseDto> {
+    console.log("[generateFlashcards] called with sourceText length:", sourceText?.length);
     try {
       // 1. Calculate metadata
       const startTime = Date.now();
@@ -78,6 +79,7 @@ Focus on important facts, definitions, concepts, and relationships.`);
         generated_count: proposals.length,
       };
     } catch (error) {
+      console.error("[generateFlashcards] error:", error, "type:", typeof error, "stringified:", JSON.stringify(error));
       // Log error and save to generation_error_logs
       await this.logGenerationError(error, {
         sourceTextHash: await this.calculateHash(sourceText),
