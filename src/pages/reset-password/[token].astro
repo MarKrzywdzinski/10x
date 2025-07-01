@@ -1,0 +1,13 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { ResetPasswordConfirmForm } from "@/components/ResetPasswordConfirmForm";
+
+const { token } = Astro.params;
+---
+
+<Layout title="Ustaw nowe hasło - 10xCards">
+  <div class="container mx-auto px-4 py-8 max-w-md">
+    <h1 class="text-3xl font-bold mb-6">Ustaw nowe hasło</h1>
+    <ResetPasswordConfirmForm client:load token={token} />
+  </div>
+</Layout>
