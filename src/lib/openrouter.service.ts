@@ -9,6 +9,14 @@ const configSchema = z.object({
   apiUrl: z.string().url().optional(),
   timeout: z.number().positive().optional(),
   maxRetries: z.number().positive().optional(),
+  /**
+   * The website URL that will be sent in the `HTTP-Referer` header.
+   * OpenRouter requires this header for all requests. See:
+   * https://openrouter.ai/docs#authentication
+   */
+  referer: z.string().url().optional(),
+  /** A short, human-readable name of the application shown in OpenRouter's dashboard. */
+  title: z.string().optional(),
 });
 
 export class OpenRouterService {
@@ -16,6 +24,8 @@ export class OpenRouterService {
   private readonly apiKey: string;
   private readonly defaultTimeout: number;
   private readonly maxRetries: number;
+  private readonly referer: string;
+  private readonly title?: string;
   private readonly logger: Logger;
 
   private currentSystemMessage = "";
@@ -29,7 +39,14 @@ export class OpenRouterService {
     presence_penalty: 0,
   };
 
-  constructor(config: { apiKey: string; apiUrl?: string; timeout?: number; maxRetries?: number }) {
+  constructor(config: {
+    apiKey: string;
+    apiUrl?: string;
+    timeout?: number;
+    maxRetries?: number;
+    referer?: string;
+    title?: string;
+  }) {
     this.logger = new Logger("OpenRouterService");
 
     try {
@@ -40,6 +57,13 @@ export class OpenRouterService {
       this.apiUrl = validatedConfig.apiUrl || "https://openrouter.ai/api/v1";
       this.defaultTimeout = validatedConfig.timeout || 30000;
       this.maxRetries = validatedConfig.maxRetries || 3;
+
+      // OpenRouter requires the HTTP-Referer header. When not provided by the caller we
+      // fall back to the current origin (useful in development) or localhost.
+      this.referer =
+        validatedConfig.referer || (typeof window !== "undefined" ? window.location.origin : "http://localhost");
+
+      this.title = validatedConfig.title;
     } catch (error) {
       this.logger.error(error as Error, {
         config: {
@@ -272,6 +296,8 @@ export class OpenRouterService {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${this.apiKey}`,
+            "HTTP-Referer": this.referer,
+            ...(this.title ? { "X-Title": this.title } : {}),
           },
           body: JSON.stringify(requestPayload),
           signal: AbortSignal.timeout(this.defaultTimeout),

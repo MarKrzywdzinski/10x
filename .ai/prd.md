@@ -121,6 +121,13 @@ Opis: Jako zalogowany użytkownik chcę mieć pewność, że moje fiszki nie są
 Kryteria akceptacji:
 - Tylko zalogowany użytkownik może wyświetlać, edytować i usuwać swoje fiszki.
 - Nie ma dostępu do fiszek innych użytkowników ani możliwości współdzielenia.
+- Logowanie i rejestracja odbywają się na dedykowanych stronach.
+  - Logowanie wymaga podania adresu email i hasła.
+  - Rejestracja wymaga podania adresu email, hasła i potwierdzenia hasła.
+  - Użytkownik MOŻE korzystać z tworzenia reguł "ad-hoc" bez logowania się do systemu.
+  - Użytkownik NIE MOŻE korzystać z funkcji Kolekcji bez logowania się do systemu.
+  - Nie korzystamy z zewnętrznych serwisów logowania (np. Google, GitHub).
+  - Odzyskiwanie hasła powinno być możliwe.
 
 ## 6. Metryki sukcesu
 1. Efektywność generowania fiszek:

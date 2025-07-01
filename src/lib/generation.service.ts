@@ -11,13 +11,15 @@ export class GenerationService {
 
   constructor(
     private readonly supabase: SupabaseClient,
-    openRouterConfig?: { apiKey: string }
+    openRouterConfig?: { apiKey: string; referer?: string; title?: string }
   ) {
     if (!openRouterConfig?.apiKey) {
       throw new Error("OpenRouter API key is required");
     }
     this.openRouter = new OpenRouterService({
       apiKey: openRouterConfig.apiKey,
+      referer: openRouterConfig.referer,
+      title: openRouterConfig.title,
       timeout: 60000, // 60 seconds timeout for longer generations
     });
 

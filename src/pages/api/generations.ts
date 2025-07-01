@@ -50,6 +50,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Initialize service and generate flashcards
     const generationService = new GenerationService(locals.supabase, {
       apiKey: import.meta.env.OPENROUTER_API_KEY,
+      // Use the request's origin header when available. This is required by OpenRouter.
+      // Fallback to the value provided via environment variable, or localhost during development.
+      referer:
+        request.headers.get("origin") ||
+        (import.meta.env.OPENROUTER_HTTP_REFERER as string | undefined) ||
+        "http://localhost",
+      title: "10xCards Flashcard Generation",
     });
     const result = await generationService.generateFlashcards(body.source_text);
 
