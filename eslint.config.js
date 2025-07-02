@@ -1,7 +1,3 @@
-
-
-
-
 import eslint from "@eslint/js";
 import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 import eslintPluginAstro from "eslint-plugin-astro";
@@ -15,14 +11,25 @@ export default [
   {
     ignores: ["src/db/database.types.ts"],
   },
-  eslint.configs.recommended,
-  ...tseslint.configs.strict,
-  ...tseslint.configs.stylistic,
-  jsxA11y.flatConfigs.recommended,
-  pluginReact.configs.flat.recommended,
-  ...eslintPluginAstro.configs["flat/recommended"],
-  eslintPluginPrettier,
+  // Astro files: only Astro and Prettier plugins
   {
+    files: ["**/*.astro"],
+    plugins: {
+      astro: eslintPluginAstro,
+    },
+    ...eslintPluginAstro.configs["flat/recommended"][0],
+    rules: {
+      ...(eslintPluginAstro.configs["flat/recommended"][0]?.rules || {}),
+    },
+  },
+  // React/TS/JS files: React, TS, Prettier, a11y, etc.
+  {
+    files: ["**/*.{js,jsx,ts,tsx}", "**/*.mdx"],
+    ...eslint.configs.recommended,
+    ...tseslint.configs.strict[0],
+    ...tseslint.configs.stylistic[0],
+    ...jsxA11y.flatConfigs.recommended,
+    ...pluginReact.configs.flat.recommended,
     plugins: {
       "react-hooks": eslintPluginReactHooks,
       "react-compiler": reactCompiler,
@@ -43,4 +50,6 @@ export default [
       "react-compiler/react-compiler": "error",
     },
   },
+  // Prettier for all files
+  eslintPluginPrettier,
 ];
