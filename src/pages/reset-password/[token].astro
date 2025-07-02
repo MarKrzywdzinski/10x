@@ -6,8 +6,12 @@ const { token } = Astro.params;
 ---
 
 <Layout title="Ustaw nowe hasło - 10xCards">
-  <div class="container mx-auto px-4 py-8 max-w-md">
-    <h1 class="text-3xl font-bold mb-6">Ustaw nowe hasło</h1>
+  <main
+    class="max-w-md mx-auto py-12 px-6 bg-white/70 dark:bg-neutral-900/70 rounded-3xl shadow-2xl backdrop-blur-md border border-neutral-200 dark:border-neutral-800 mt-10"
+  >
+    <h1 class="text-3xl font-extrabold mb-8 text-center tracking-tight text-neutral-900 dark:text-white drop-shadow-lg">
+      Ustaw nowe hasło
+    </h1>
     <ResetPasswordConfirmForm client:load token={token} />
-  </div>
+  </main>
 </Layout>
