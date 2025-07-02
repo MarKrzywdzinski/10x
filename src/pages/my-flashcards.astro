@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MyFlashcardsClient from "../components/MyFlashcardsClient";
+---
+
+<Layout title="Moje fiszki">
+  <main class="max-w-2xl mx-auto py-8 px-4">
+    <h1 class="text-2xl font-bold mb-6">Moje fiszki</h1>
+    <MyFlashcardsClient client:load />
+  </main>
+</Layout>

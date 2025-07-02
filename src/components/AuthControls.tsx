@@ -23,8 +23,11 @@ export default function AuthControls() {
 
   if (email) {
     return (
-      <div className="flex items-center text-sm">
-        <span className="mr-2">Cześć, {email}</span>
+      <div className="flex items-center text-sm gap-2">
+        <span>Cześć, {email}</span>
+        <Button variant="outline" asChild>
+          <a href="/my-flashcards">Moje fiszki</a>
+        </Button>
         <LogoutButton />
       </div>
     );
