@@ -20,7 +20,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     e.preventDefault();
     setError(null);
 
-    // prosta walidacja klienta
+    // Guard clauses for validation
     if (!email) {
       setError("Email jest wymagany");
       return;
@@ -30,16 +30,22 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
       return;
     }
 
-    // placeholder logiki API
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      // Defensive: handle non-JSON response
+      let data: { error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        setError("Nieprawidłowa odpowiedź serwera");
+        return;
+      }
 
       if (!res.ok) {
         setError(data.error || "Nie udało się zalogować");
@@ -48,7 +54,10 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
 
       onSuccess?.();
       window.location.href = "/generate";
-    } catch {
+    } catch (err) {
+      // Log error for debugging, but don't expose details to user
+      // eslint-disable-next-line no-console
+      console.error("Login error:", err);
       setError("Wystąpił błąd przy łączeniu z serwerem");
     } finally {
       setIsLoading(false);
