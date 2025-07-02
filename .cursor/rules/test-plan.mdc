@@ -1,0 +1,161 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Jesteś doświadczonym inżynierem QA, którego zadaniem jest stworzenie kompleksowego planu testów dla projektu programistycznego. Przeanalizuj poniższe informacje o projekcie:
+
+<kod_projektu>
+
+</kod_projektu>
+
+<stos_technologiczny>
+[tech-stack.md](mdc:.ai/tech-stack.md)
+</stos_technologiczny>
+
+Twoim zadaniem jest wygenerowanie szczegółowego planu testów, który będzie dostosowany do specyfiki projektu, uwzględniając wykorzystywane technologie, strukturę kodu oraz kluczowe elementy repozytorium. Plan testów powinien być napisany w języku polskim.
+
+Przed stworzeniem planu testów, przeprowadź dogłębną analizę projektu wewnątrz bloku <analiza_projektu> w swoim bloku myślowym. W analizie uwzględnij:
+
+1. Kluczowe komponenty projektu wynikające z analizy kodu:
+   - Wymień i opisz główne komponenty projektu
+2. Specyfikę stosu technologicznego i jego wpływ na strategię testowania:
+   - Przeanalizuj każdy element stosu technologicznego i jego implikacje dla testowania
+3. Priorytety testowe bazujące na strukturze repozytorium:
+   - Zidentyfikuj i uszereguj obszary testowe według ważności
+4. Potencjalne obszary ryzyka wymagające szczególnej uwagi w testach:
+   - Wymień potencjalne ryzyka i uzasadnij, dlaczego wymagają specjalnej uwagi
+
+Po zakończeniu analizy, stwórz plan testów wewnątrz bloku <plan_testów>. Plan powinien zawierać:
+
+1. Wprowadzenie i cele testowania
+2. Zakres testów
+3. Typy testów do przeprowadzenia (np. testy jednostkowe, integracyjne, wydajnościowe)
+4. Scenariusze testowe dla kluczowych funkcjonalności
+5. Środowisko testowe
+6. Narzędzia do testowania
+7. Harmonogram testów
+8. Kryteria akceptacji testów
+9. Role i odpowiedzialności w procesie testowania
+10. Procedury raportowania błędów
+
+Pamiętaj, aby plan testów był:
+- Dokładnie dostosowany do kontekstu projektu
+- Uwzględniał specyfikę wykorzystywanych technologii
+- Priorytetyzował kluczowe elementy repozytorium
+- Był napisany w języku polskim
+- Prezentował wysoką jakość i profesjonalizm
+
+Rozpocznij od analizy, a następnie przejdź do tworzenia planu testów. Twój końcowy wynik powinien składać się tylko z planu testów i nie powinien powielać ani streszczać żadnej pracy wykonanej w bloku analizy projektu.
+
+Przedstaw ten plan w formacie Markdown.
+
+# Plan testów dla projektu 10xCards
+
+## 1. Wprowadzenie i cele testowania
+Celem testów jest potwierdzenie, że aplikacja 10xCards spełnia wymagania funkcjonalne i niefunkcjonalne, działa stabilnie na wspieranych środowiskach (przeglądarki desktop i mobile) oraz zapewnia bezpieczeństwo danych użytkowników. Testy mają również zminimalizować ryzyko regresji przy kolejnych iteracjach rozwojowych.
+
+## 2. Zakres testów
+1. Moduł rejestracji, logowania i zarządzania sesją (Supabase Auth + middleware SSR).  
+2. Generowanie fiszek (endpoint `/api/generations` + komponent React).  
+3. Zapisywanie fiszek (endpoint `/api/flashcards` + komponent React).  
+4. UI/UX głównych stron:  
+   • `/generate` - formularz generowania i widok listy fiszek  
+   • `/login`, `/register`, reset hasła  
+5. Middleware (kontrola dostępu do chronionych zasobów).  
+6. Integracja z OpenRouter (limity, obsługa błędów).  
+7. Migracje i reguły RLS w bazie Supabase (generations, flashcards).  
+8. Responsywność i dostępność (ARIA, klawiatura, kontrast).  
+
+Poza zakresem: mechanizmy płatności (gdy zostaną dodane), marketingowe strony statyczne.
+
+## 3. Typy testów
+| Poziom | Typ | Opis |
+|--------|-----|------|
+| Jednostkowe | • Vitest + Testing Library — funkcje pomocnicze, walidacja danych, komponenty UI |
+| Integracyjne | • Playwright APIRequest — API `/api/auth/*`, `/api/generations`, `/api/flashcards` <br/>• Middleware SSR z Supabase <br/>• Integracja OpenRouter (mock MSW) |
+| End-to-end (E2E) | • Playwright (desktop + mobile emulacja) — scenariusze użytkownika |
+| Testy migracji DB | • Supabase CLI + pg-tap — schemat i RLS |
+| Testy wydajności | • Load test endpointów generacji i zapisu fiszek (k6) |
+| Testy bezpieczeństwa | • Lintery, Snyk/OWASP zapytania do API, kontrola cookie flags |
+| Testy dostępności | • axe-core, Lighthouse (kontrast, nawigacja klawiaturą) |
+
+## 4. Scenariusze testowe (kluczowe)
+1. **Rejestracja**  
+   • Poprawne dane ⇒ konto "unconfirmed", e-mail wysłany.  
+   • Duplikat e-mail ⇒ błąd.  
+   • Niewłaściwe hasło (<8 znaków) ⇒ walidacja front i back.  
+2. **Logowanie**  
+   • Poprawne dane ⇒ sesja cookie ustawiona, redirect `/generate`.  
+   • Złe hasło ⇒ błąd 401, komunikat UI.  
+   • Niepotwierdzony e-mail ⇒ błąd 403.  
+3. **Wylogowanie**  
+   • POST `/api/auth/logout` kasuje sesję, UI aktualizuje AuthControls.  
+4. **Generowanie fiszek (zalogowany)**  
+   • Tekst 1000-10000 znaków ⇒ 201, lista fiszek.  
+   • Tekst <1000 ⇒ 400.  
+5. **Generowanie fiszek (niezalogowany)**  
+   • Przycisk "Nie można wygenerować… Zaloguj się!" widoczny, brak requestu.  
+6. **Zapis fiszek**  
+   • Użytkownik akceptuje 1-100 fiszek ⇒ 201, rekordy w tabeli.  
+   • Niepoprawny `generation_id` ⇒ 400.  
+7. **RLS**  
+   • Użytkownik A nie widzi generacji/fiszek użytkownika B.  
+8. **Middleware**  
+   • Próba wejścia na `/generate` bez sesji ⇒ redirect `/login`.  
+9. **Responsywność**  
+   • Widok mobile (<640 px) - elementy w kolumnie, brak przepełnień.  
+10. **Dostępność**  
+    • Wszystkie interaktywne elementy dostępne z klawiatury, aria-labels.
+
+## 5. Środowisko testowe
+| Element | Konfiguracja |
+|---------|--------------|
+| OS | Windows 11, macOS Sonoma, Ubuntu 22.04 |
+| Przeglądarki | Chrome 124+, Firefox 126+, Safari 17+, Edge 124+ |
+| Node | 22.14.0 (zgodnie z `.nvmrc`) |
+| Baza | Supabase lokalny (`supabase start`) oraz projekt staging |
+| Zmienne env | `.env.test` z kluczem serwisowym, anon key, dummy SMTP |
+
+## 6. Narzędzia
+* **Jest + @testing-library/react** – testy jednostkowe/integracyjne UI  
+* **Vitest** – testy jednostkowe funkcji TS  
+* **Supertest** – testy endpointów API (SSR)  
+* **Cypress/Playwright** – E2E (preferowany Playwright)  
+* **k6** – testy wydajnościowe API  
+* **MSW** – mocki HTTP (OpenRouter, Supabase)  
+* **ESLint / Prettier** – statyczna analiza kodu  
+* **axe-core + Lighthouse CI** – dostępność i performance  
+* **Supabase CLI** – testowanie migracji i RLS
+
+## 7. Harmonogram testów
+| Faza | Zakres | Czas trwania |
+|------|--------|--------------|
+| Sprint 0 | Przygotowanie środowiska, mocki, baseline lighthouse | 1 dzień |
+| Sprint 1 | Jednostkowe (Vitest) + integracyjne Auth, Middleware | 2 dni |
+| Sprint 2 | API (Playwright API) Generations & Flashcards, migracje | 3 dni |
+| Sprint 3 | E2E happy path, responsywność, dostępność | 2 dni |
+| Sprint 4 | Testy wydajności, negatywne scenariusze, regresja | 2 dni |
+| Ciągłe | Lint, unit + integration w CI/CD, Lighthouse budowanie | każdy commit |
+
+## 8. Kryteria akceptacji
+* 95 % pokrycia testami krytycznych ścieżek (Auth, Generations, Flashcards).  
+* 0 otwartych defektów o priorytecie P0/P1 przed release.  
+* Lighthouse Performance > 90, Accessibility > 90.  
+* Wszystkie testy automatyczne zielone w pipeline CI.
+
+## 9. Role i odpowiedzialności
+| Rola | Zadania |
+|------|---------|
+| QA Lead | plan, strategia, raport końcowy |
+| QA Engineer | implementacja testów automatycznych, raportowanie defektów |
+| Dev | naprawa defektów, pokrycie unit-tests |
+| DevOps | konfiguracja CI/CD, środowisk testowych |
+| Product Owner | akceptacja kryteriów, priorytety |
+
+## 10. Procedury raportowania błędów
+1. Defekt rejestrowany w Jira w projekcie "10xCards".  
+2. Obowiązkowe pola: tytuł, kroki reprodukcji, oczekiwany rezultat, faktyczny rezultat, zrzut ekranu/log.  
+3. Priorytet ustala QA Lead w porozumieniu z PO.  
+4. Statusy: **Open → In Progress → In Review → Done**.  
+5. Retest wykonywany automatycznie (CI) lub manualnie, wynik dokumentowany w komentarzu.

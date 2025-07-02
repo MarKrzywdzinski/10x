@@ -13,6 +13,7 @@
 - [Project Scope](#project-scope)
 - [Project Status](#project-status)
 - [License](#license)
+- [Testing Stack](#testing-stack)
 
 ## Tech Stack
 
@@ -85,3 +86,16 @@ The project is currently in the MVP stage and under active development.
 ## License
 
 This project is licensed under the MIT License.
+
+## Testing Stack
+
+### Testy jednostkowe i integracyjne
+- **Vitest** — szybki runner zgodny z API Jest/Testing Library
+- **@testing-library/react** — deklaratywne testy komponentów (dostępność, zachowanie)
+
+### Testy end-to-end (E2E)
+- **Playwright** — cross-browser (Chromium, WebKit, Firefox), trace viewer, emulacja mobile
+
+Dodatkowo wykorzystywane są:
+- **MSW (Mock Service Worker)** do mockowania żądań HTTP w testach
+- **k6** do testów wydajności API
