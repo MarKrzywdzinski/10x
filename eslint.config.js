@@ -58,12 +58,12 @@ const reactConfig = tseslint.config({
 
 export default [
   includeIgnoreFile(gitignorePath),
-  baseConfig,
+  {
+    ...baseConfig,
+    ignores: ["src/db/database.types.ts"],
+  },
   jsxA11yConfig,
   reactConfig,
   eslintPluginAstro.configs["flat/recommended"],
   eslintPluginPrettier,
-  {
-    ignores: ["src/db/database.types.ts"],
-  },
 ];
