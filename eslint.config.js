@@ -8,10 +8,7 @@ import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
 export default [
-  {
-    ignores: ["src/db/database.types.ts"],
-  },
-  // Astro files: only Astro and Prettier plugins
+  { ignores: ["src/db/database.types.ts"] },
   {
     files: ["**/*.astro"],
     plugins: {
@@ -22,7 +19,6 @@ export default [
       ...(eslintPluginAstro.configs["flat/recommended"][0]?.rules || {}),
     },
   },
-  // React/TS/JS files: React, TS, Prettier, a11y, etc.
   {
     files: ["**/*.{js,jsx,ts,tsx}", "**/*.mdx"],
     ...eslint.configs.recommended,
@@ -53,6 +49,5 @@ export default [
       "react-compiler/react-compiler": "error",
     },
   },
-  // Prettier for all files
   eslintPluginPrettier,
 ];
