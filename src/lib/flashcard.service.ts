@@ -47,6 +47,7 @@ export class FlashcardService {
    * @throws {DatabaseError} With appropriate error message and details
    */
   private handleDatabaseError(error: PostgrestError): never {
+    // eslint-disable-next-line no-console
     console.error("Database error:", error);
 
     switch (error.code) {

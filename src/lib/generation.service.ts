@@ -57,6 +57,7 @@ Focus on important facts, definitions, concepts, and relationships.`);
   }
 
   async generateFlashcards(sourceText: string): Promise<GenerationCreateResponseDto> {
+    // eslint-disable-next-line no-console
     console.log("[generateFlashcards] called with sourceText length:", sourceText?.length);
     try {
       // 1. Calculate metadata
@@ -80,6 +81,7 @@ Focus on important facts, definitions, concepts, and relationships.`);
         generated_count: proposals.length,
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("[generateFlashcards] error:", error, "type:", typeof error, "stringified:", JSON.stringify(error));
       // Log error and save to generation_error_logs
       await this.logGenerationError(error, {
@@ -134,12 +136,12 @@ Focus on important facts, definitions, concepts, and relationships.`);
       data: { user },
     } = await this.supabase.auth.getUser();
 
-    const userId = user?.id ?? null;
+    const userId = user?.id;
 
     const { data: generation, error } = await this.supabase
       .from("generations")
       .insert({
-        user_id: userId,
+        user_id: userId ?? "",
         source_text_hash: data.sourceTextHash,
         source_text_length: data.sourceText.length,
         generated_count: data.generatedCount,
@@ -163,10 +165,10 @@ Focus on important facts, definitions, concepts, and relationships.`);
     const {
       data: { user },
     } = await this.supabase.auth.getUser();
-    const userId = user?.id ?? null;
+    const userId = user?.id;
 
     await this.supabase.from("generation_error_logs").insert({
-      user_id: userId,
+      user_id: userId ?? "",
       error_code: error instanceof Error ? error.name : "UNKNOWN",
       error_message: error instanceof Error ? error.message : String(error),
       model: this.model,

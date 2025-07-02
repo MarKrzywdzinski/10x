@@ -21,6 +21,7 @@ export function ResetPasswordRequestForm() {
     try {
       setIsLoading(true);
       await new Promise((res) => setTimeout(res, 800));
+      // eslint-disable-next-line no-console
       console.log("Reset password request payload", { email });
       setMessage("Jeśli konto istnieje, wysłaliśmy instrukcje resetu hasła.");
       setEmail("");

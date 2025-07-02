@@ -11,6 +11,7 @@ export class Logger {
   error(error: Error, metadata?: Record<string, unknown>) {
     const sanitizedMetadata = this.sanitizeMetadata(metadata);
 
+    // eslint-disable-next-line no-console
     console.error({
       context: this.context,
       error: {
@@ -29,6 +30,7 @@ export class Logger {
   warn(message: string, metadata?: Record<string, unknown>) {
     const sanitizedMetadata = this.sanitizeMetadata(metadata);
 
+    // eslint-disable-next-line no-console
     console.warn({
       context: this.context,
       message,
