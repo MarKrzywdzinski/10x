@@ -9,7 +9,7 @@ const registerSchema = z.object({
   password: z.string().min(8),
 });
 
-export const POST: APIRoute = async ({ request, cookies, params, headers }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
   const supabase = createSupabaseServerInstance({ headers: request.headers, cookies });
 
   const body = await request.json();

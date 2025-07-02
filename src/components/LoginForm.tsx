@@ -48,7 +48,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
 
       onSuccess?.();
       window.location.href = "/generate";
-    } catch (err) {
+    } catch {
       setError("Wystąpił błąd przy łączeniu z serwerem");
     } finally {
       setIsLoading(false);

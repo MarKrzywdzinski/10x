@@ -20,7 +20,7 @@ export default function MyFlashcardsClient() {
         } else {
           const data = await res.json();
           setFlashcards(
-            (data.flashcards || []).map((f: any) => ({
+            (data.flashcards || []).map((f: FlashcardProposalViewModel) => ({
               front: f.front,
               back: f.back,
               accepted: false,
@@ -29,7 +29,7 @@ export default function MyFlashcardsClient() {
             }))
           );
         }
-      } catch (e) {
+      } catch {
         setError("Błąd sieci lub serwera");
         setFlashcards([]);
       } finally {

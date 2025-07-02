@@ -7,8 +7,9 @@ describe("FlashcardService.validateGenerationIds", () => {
       from: vi.fn().mockReturnThis(),
       select: vi.fn().mockReturnThis(),
       in: vi.fn().mockResolvedValue({ count: 2 }),
-    } as any;
-    const service = new FlashcardService(supabaseMock);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const service = new FlashcardService(supabaseMock as any);
     await expect(service.validateGenerationIds([1, 2])).resolves.toBeUndefined();
   });
 
@@ -17,8 +18,9 @@ describe("FlashcardService.validateGenerationIds", () => {
       from: vi.fn().mockReturnThis(),
       select: vi.fn().mockReturnThis(),
       in: vi.fn().mockResolvedValue({ count: 2 }),
-    } as any;
-    const service = new FlashcardService(supabaseMock);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const service = new FlashcardService(supabaseMock as any);
     await expect(service.validateGenerationIds([])).resolves.toBeUndefined();
     expect(supabaseMock.from).not.toHaveBeenCalled();
   });
@@ -28,8 +30,9 @@ describe("FlashcardService.validateGenerationIds", () => {
       from: vi.fn().mockReturnThis(),
       select: vi.fn().mockReturnThis(),
       in: vi.fn().mockResolvedValue({ count: 1 }),
-    } as any;
-    const service = new FlashcardService(supabasePartialMock);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const service = new FlashcardService(supabasePartialMock as any);
     await expect(service.validateGenerationIds([1, 2])).rejects.toThrow(DatabaseError);
   });
 });

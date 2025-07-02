@@ -68,8 +68,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
         JSON.stringify({
           message: error.message,
           stack: error.stack,
-          details: (error as any).details || null,
-          code: (error as any).code || null,
+          details: (error as { details?: string }).details || null,
+          code: (error as { code?: string }).code || null,
         }),
         {
           status: 500,
