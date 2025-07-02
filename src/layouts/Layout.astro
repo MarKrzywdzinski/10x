@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { Toaster } from "@/components/ui/sonner";
+import AuthControls from "@/components/AuthControls";
 
 interface Props {
   title?: string;
@@ -19,6 +20,12 @@ const { title = "10xCards" } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
+    <header class="w-full border-b border-border p-4">
+      <nav class="max-w-5xl mx-auto flex items-center justify-between">
+        <a href="/" class="text-lg font-semibold">10xCards</a>
+        <AuthControls client:only="react" />
+      </nav>
+    </header>
     <slot />
     <Toaster richColors closeButton client:only="react" />
   </body>

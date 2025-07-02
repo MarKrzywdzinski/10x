@@ -2,7 +2,6 @@ import { z } from "zod";
 import type { APIRoute } from "astro";
 import type { GenerateFlashcardsCommand } from "../../types";
 import { GenerationService } from "../../lib/generation.service";
-import { createClient } from "@supabase/supabase-js";
 
 export const prerender = false;
 
@@ -14,22 +13,19 @@ const generateFlashcardsSchema = z.object({
     .max(10000, "Text must not exceed 10000 characters"),
 });
 
-// Tymczasowy kod do utworzenia użytkownika, jeśli nie istnieje
-const ensureDefaultUserExists = async () => {
-  const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_KEY);
-  const userId = "caeb082e-c253-400c-a46e-4057b78fe2c2";
-  const { data, error } = await supabase.from("users").select("id").eq("id", userId).single();
-  if (!data) {
-    await supabase.from("users").insert({
-      id: userId,
-      email: "test@example.com",
-    });
-  }
-};
-
 export const POST: APIRoute = async ({ request, locals }) => {
-  await ensureDefaultUserExists();
   try {
+    const {
+      data: { user },
+    } = await locals.supabase.auth.getUser();
+
+    if (!user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     // Parse and validate request body
     const body = (await request.json()) as GenerateFlashcardsCommand;
     const validationResult = generateFlashcardsSchema.safeParse(body);

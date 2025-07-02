@@ -1,0 +1,38 @@
+import { useEffect, useState } from "react";
+import LogoutButton from "@/components/LogoutButton";
+import { Button } from "@/components/ui/button";
+
+export default function AuthControls() {
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        const data = await res.json();
+        setEmail(data.user?.email ?? null);
+      } catch {
+        // ignore
+      }
+    };
+
+    fetchSession();
+    const interval = setInterval(fetchSession, 5000); // refresh every 5s
+    return () => clearInterval(interval);
+  }, []);
+
+  if (email) {
+    return (
+      <div className="flex items-center text-sm">
+        <span className="mr-2">Cześć, {email}</span>
+        <LogoutButton />
+      </div>
+    );
+  }
+
+  return (
+    <Button variant="outline" asChild>
+      <a href="/login">Zaloguj</a>
+    </Button>
+  );
+}

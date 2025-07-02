@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FlashcardProposalDto, GenerationCreateResponseDto } from "@/types";
 import { TextInputArea } from "./TextInputArea";
 import { GenerateButton } from "./GenerateButton";
@@ -6,6 +6,7 @@ import { FlashcardList } from "./FlashcardList";
 import { SkeletonLoader } from "./SkeletonLoader";
 import { BulkSaveButton } from "./BulkSaveButton";
 import { ErrorNotification } from "./ErrorNotification";
+import { Button } from "./ui/button";
 
 export type FlashcardProposalViewModel = Omit<FlashcardProposalDto, "source"> & {
   accepted: boolean;
@@ -19,6 +20,21 @@ export function FlashcardGenerationView() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [generationId, setGenerationId] = useState<number | null>(null);
   const [flashcards, setFlashcards] = useState<FlashcardProposalViewModel[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  // Check auth status on mount
+  useEffect(() => {
+    const check = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        const data = await res.json();
+        setIsLoggedIn(Boolean(data.user));
+      } catch {
+        setIsLoggedIn(false);
+      }
+    };
+    check();
+  }, []);
 
   const handleTextChange = (value: string) => {
     setTextValue(value);
@@ -81,13 +97,21 @@ export function FlashcardGenerationView() {
     <div className="space-y-6">
       {errorMessage && <ErrorNotification message={errorMessage} />}
 
-      <TextInputArea value={textValue} onChange={handleTextChange} disabled={isLoading} />
+      {isLoggedIn ? (
+        <>
+          <TextInputArea value={textValue} onChange={handleTextChange} disabled={isLoading} />
 
-      <GenerateButton
-        onClick={handleGenerateFlashcards}
-        disabled={isLoading || textValue.length < 1000 || textValue.length > 10000}
-        isLoading={isLoading}
-      />
+          <GenerateButton
+            onClick={handleGenerateFlashcards}
+            disabled={isLoading || textValue.length < 1000 || textValue.length > 10000}
+            isLoading={isLoading}
+          />
+        </>
+      ) : (
+        <Button variant="outline" asChild className="w-full sm:w-auto">
+          <a href="/login">Nie można wygenerować fiszek! Zaloguj się!</a>
+        </Button>
+      )}
 
       {isLoading && <SkeletonLoader />}
 

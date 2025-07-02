@@ -1,7 +1,6 @@
 import crypto from "crypto";
 import type { FlashcardProposalDto, GenerationCreateResponseDto } from "../types";
 import type { SupabaseClient } from "../db/supabase.client";
-import { DEFAULT_USER_ID } from "../db/supabase.client";
 import { OpenRouterService } from "./openrouter.service";
 import { OpenRouterError } from "./openrouter.types";
 
@@ -131,10 +130,16 @@ Focus on important facts, definitions, concepts, and relationships.`);
     generatedCount: number;
     durationMs: number;
   }): Promise<number> {
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+
+    const userId = user?.id ?? null;
+
     const { data: generation, error } = await this.supabase
       .from("generations")
       .insert({
-        user_id: DEFAULT_USER_ID,
+        user_id: userId,
         source_text_hash: data.sourceTextHash,
         source_text_length: data.sourceText.length,
         generated_count: data.generatedCount,
@@ -155,8 +160,13 @@ Focus on important facts, definitions, concepts, and relationships.`);
       sourceTextLength: number;
     }
   ): Promise<void> {
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+    const userId = user?.id ?? null;
+
     await this.supabase.from("generation_error_logs").insert({
-      user_id: DEFAULT_USER_ID,
+      user_id: userId,
       error_code: error instanceof Error ? error.name : "UNKNOWN",
       error_message: error instanceof Error ? error.message : String(error),
       model: this.model,

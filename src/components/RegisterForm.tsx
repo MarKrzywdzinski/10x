@@ -31,14 +31,27 @@ export function RegisterForm() {
 
     try {
       setIsLoading(true);
-      await new Promise((res) => setTimeout(res, 1000));
-      console.log("Register payload", { email, password });
-      setSuccess("Rejestracja zakończona (mock)");
+
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Nie udało się zarejestrować");
+        return;
+      }
+
+      setSuccess("Rejestracja zakończona. Sprawdź skrzynkę e-mail, aby potwierdzić konto.");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
     } catch {
-      setError("Wystąpił błąd (mock)");
+      setError("Wystąpił błąd przy łączeniu z serwerem");
     } finally {
       setIsLoading(false);
     }

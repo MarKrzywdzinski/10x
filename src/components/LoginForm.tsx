@@ -33,11 +33,23 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     // placeholder logiki API
     try {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      console.log("Login payload", { email, password });
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Nie udało się zalogować");
+        return;
+      }
+
       onSuccess?.();
+      window.location.href = "/generate";
     } catch (err) {
-      setError("Wystąpił błąd (mock)");
+      setError("Wystąpił błąd przy łączeniu z serwerem");
     } finally {
       setIsLoading(false);
     }
