@@ -31,7 +31,9 @@ export default [
     ...jsxA11y.flatConfigs.recommended,
     ...pluginReact.configs.flat.recommended,
     plugins: {
+      // @ts-expect-error: plugin type workaround for ESM/flat config
       "react-hooks": eslintPluginReactHooks,
+      // @ts-expect-error: plugin type workaround for ESM/flat config
       "react-compiler": reactCompiler,
     },
     languageOptions: {
@@ -43,6 +45,7 @@ export default [
     },
     settings: { react: { version: "detect" } },
     rules: {
+      // @ts-expect-error: rule type workaround for ESM/flat config
       ...eslintPluginReactHooks.configs.recommended.rules,
       "no-console": "warn",
       "no-unused-vars": "off",
