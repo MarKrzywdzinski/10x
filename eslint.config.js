@@ -8,14 +8,15 @@ import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import parser from "@typescript-eslint/parser";
 import * as tseslint from "typescript-eslint";
 
+// Ignore files here instead of .eslintignore (ESLint 9+)
+const ignores = ["src/db/database.types.ts", "dist/**"];
 export default [
-  { ignores: ["src/db/database.types.ts"] },
+  { ignores },
   {
     files: ["**/*.astro"],
     plugins: {
       astro: eslintPluginAstro,
     },
-    // Use parser only if available (defensive for CI)
     ...(eslintPluginAstro.parsers && eslintPluginAstro.parsers["astro"]
       ? {
           languageOptions: {
