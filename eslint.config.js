@@ -11,37 +11,30 @@ export default [
   { ignores: ["src/db/database.types.ts"] },
   {
     files: ["**/*.astro"],
-    plugins: {
-      astro: eslintPluginAstro,
+    languageOptions: {
+      parser: eslintPluginAstro.parsers["astro"],
+      parserOptions: { extraFileExtensions: [".astro"] },
     },
+    plugins: { astro: eslintPluginAstro },
     ...eslintPluginAstro.configs["flat/recommended"][0],
-    rules: {
-      ...(eslintPluginAstro.configs["flat/recommended"][0]?.rules || {}),
-    },
   },
   {
-    files: ["**/*.{js,jsx,ts,tsx}", "**/*.mdx"],
+    files: ["**/*.{ts,tsx,js,jsx}", "**/*.mdx"],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: { project: "./tsconfig.json", ecmaVersion: 2020, sourceType: "module" },
+    },
     ...eslint.configs.recommended,
     ...tseslint.configs.strict[0],
     ...tseslint.configs.stylistic[0],
-    ...jsxA11y.flatConfigs.recommended,
     ...pluginReact.configs.flat.recommended,
+    ...jsxA11y.flatConfigs.recommended,
     plugins: {
-      // @ts-expect-error: plugin type workaround for ESM/flat config
       "react-hooks": eslintPluginReactHooks,
-      // @ts-expect-error: plugin type workaround for ESM/flat config
       "react-compiler": reactCompiler,
-    },
-    languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
-      globals: {
-        window: true,
-        document: true,
-      },
     },
     settings: { react: { version: "detect" } },
     rules: {
-      // @ts-expect-error: rule type workaround for ESM/flat config
       ...eslintPluginReactHooks.configs.recommended.rules,
       "no-console": "warn",
       "no-unused-vars": "off",
