@@ -31,16 +31,15 @@ export default [
     },
   },
   {
-    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mdx"],
+    files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
-      parser,
+      parser: parser,
       parserOptions: {
         project: "./tsconfig.json",
         ecmaVersion: 2020,
         sourceType: "module",
       },
     },
-    ...eslint.configs.recommended,
     ...tseslint.configs.strict[0],
     ...tseslint.configs.stylistic[0],
     ...pluginReact.configs.flat.recommended,
