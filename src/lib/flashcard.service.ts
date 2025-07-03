@@ -6,7 +6,7 @@ export class DatabaseError extends Error {
   constructor(
     message: string,
     public readonly code: string,
-    public readonly details: string
+    public readonly details: string,
   ) {
     super(message);
     this.name = "DatabaseError";
@@ -23,7 +23,10 @@ export class FlashcardService {
    * @returns Array of created flashcards
    * @throws {DatabaseError} When database operation fails
    */
-  async createBatch(userId: string, flashcards: FlashcardCreateDto[]): Promise<FlashcardDto[]> {
+  async createBatch(
+    userId: string,
+    flashcards: FlashcardCreateDto[],
+  ): Promise<FlashcardDto[]> {
     const flashcardsWithUserId = flashcards.map((flashcard) => ({
       ...flashcard,
       user_id: userId,
@@ -55,10 +58,14 @@ export class FlashcardService {
         throw new DatabaseError(
           "Referenced record does not exist",
           error.code,
-          "The generation_id provided does not exist in the database"
+          "The generation_id provided does not exist in the database",
         );
       default:
-        throw new DatabaseError("Failed to create flashcards", error.code || "UNKNOWN", error.message);
+        throw new DatabaseError(
+          "Failed to create flashcards",
+          error.code || "UNKNOWN",
+          error.message,
+        );
     }
   }
 
@@ -81,7 +88,7 @@ export class FlashcardService {
       throw new DatabaseError(
         "Invalid generation IDs",
         "INVALID_GENERATION_ID",
-        "One or more generation_ids do not exist"
+        "One or more generation_ids do not exist",
       );
     }
   }

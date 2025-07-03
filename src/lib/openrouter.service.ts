@@ -1,6 +1,14 @@
 import { z } from "zod";
-import type { ModelParameters, RequestPayload, ApiResponse } from "./openrouter.types";
-import { OpenRouterError, requestPayloadSchema, apiResponseSchema } from "./openrouter.types";
+import type {
+  ModelParameters,
+  RequestPayload,
+  ApiResponse,
+} from "./openrouter.types";
+import {
+  OpenRouterError,
+  requestPayloadSchema,
+  apiResponseSchema,
+} from "./openrouter.types";
 import { Logger } from "./logger";
 
 // Validation schemas
@@ -61,7 +69,10 @@ export class OpenRouterService {
       // OpenRouter requires the HTTP-Referer header. When not provided by the caller we
       // fall back to the current origin (useful in development) or localhost.
       this.referer =
-        validatedConfig.referer || (typeof window !== "undefined" ? window.location.origin : "http://localhost");
+        validatedConfig.referer ||
+        (typeof window !== "undefined"
+          ? window.location.origin
+          : "http://localhost");
 
       this.title = validatedConfig.title;
     } catch (error) {
@@ -81,7 +92,10 @@ export class OpenRouterService {
   public setSystemMessage(message: string): void {
     try {
       if (!message.trim()) {
-        throw new OpenRouterError("System message cannot be empty", "INVALID_SYSTEM_MESSAGE");
+        throw new OpenRouterError(
+          "System message cannot be empty",
+          "INVALID_SYSTEM_MESSAGE",
+        );
       }
       this.currentSystemMessage = message;
     } catch (error) {
@@ -96,7 +110,10 @@ export class OpenRouterService {
   public setUserMessage(message: string): void {
     try {
       if (!message.trim()) {
-        throw new OpenRouterError("User message cannot be empty", "INVALID_USER_MESSAGE");
+        throw new OpenRouterError(
+          "User message cannot be empty",
+          "INVALID_USER_MESSAGE",
+        );
       }
       this.currentUserMessage = message;
     } catch (error) {
@@ -113,7 +130,10 @@ export class OpenRouterService {
       this.currentResponseFormat = schema;
     } catch (error) {
       this.logger.error(error as Error, { schemaKeys: Object.keys(schema) });
-      throw new OpenRouterError("Invalid JSON schema provided", "INVALID_RESPONSE_FORMAT");
+      throw new OpenRouterError(
+        "Invalid JSON schema provided",
+        "INVALID_RESPONSE_FORMAT",
+      );
     }
   }
 
@@ -123,7 +143,10 @@ export class OpenRouterService {
   public setModel(name: string, parameters?: ModelParameters): void {
     try {
       if (!name.trim()) {
-        throw new OpenRouterError("Model name cannot be empty", "INVALID_MODEL_NAME");
+        throw new OpenRouterError(
+          "Model name cannot be empty",
+          "INVALID_MODEL_NAME",
+        );
       }
 
       this.currentModelName = name;
@@ -157,7 +180,10 @@ export class OpenRouterService {
       } catch (validationError) {
         const error = validationError as Error;
         this.logger.error(error, {
-          validationDetails: validationError instanceof z.ZodError ? validationError.errors : undefined,
+          validationDetails:
+            validationError instanceof z.ZodError
+              ? validationError.errors
+              : undefined,
           payload: {
             ...payload,
             messages: payload.messages.map((m) => ({
@@ -178,13 +204,18 @@ export class OpenRouterService {
       } catch (validationError) {
         const error = validationError as Error;
         this.logger.error(error, {
-          validationDetails: validationError instanceof z.ZodError ? validationError.errors : undefined,
+          validationDetails:
+            validationError instanceof z.ZodError
+              ? validationError.errors
+              : undefined,
           response: {
             choicesCount: response.choices?.length,
             firstChoice: response.choices?.[0]
               ? {
                   hasMessage: Boolean(response.choices[0].message),
-                  messageKeys: response.choices[0].message ? Object.keys(response.choices[0].message) : [],
+                  messageKeys: response.choices[0].message
+                    ? Object.keys(response.choices[0].message)
+                    : [],
                 }
               : null,
           },
@@ -194,14 +225,18 @@ export class OpenRouterService {
 
       // Check if we have any choices in the response
       if (!response.choices.length) {
-        throw new OpenRouterError("No response received from the model", "EMPTY_RESPONSE");
+        throw new OpenRouterError(
+          "No response received from the model",
+          "EMPTY_RESPONSE",
+        );
       }
 
       // Return the first choice's content
       return response.choices[0].message.content;
     } catch (error) {
       // Log the error with relevant metadata
-      const errorObj = error instanceof Error ? error : new Error(String(error));
+      const errorObj =
+        error instanceof Error ? error : new Error(String(error));
       this.logger.error(errorObj, {
         errorDetails:
           error instanceof Error
@@ -209,7 +244,8 @@ export class OpenRouterService {
                 name: error.name,
                 message: error.message,
                 code: error instanceof OpenRouterError ? error.code : undefined,
-                validationErrors: error instanceof z.ZodError ? error.errors : undefined,
+                validationErrors:
+                  error instanceof z.ZodError ? error.errors : undefined,
               }
             : undefined,
         context: {
@@ -222,7 +258,10 @@ export class OpenRouterService {
 
       // Handle validation errors
       if (error instanceof z.ZodError) {
-        throw new OpenRouterError(`Validation error: ${error.errors[0].message}`, "VALIDATION_ERROR");
+        throw new OpenRouterError(
+          `Validation error: ${error.errors[0].message}`,
+          "VALIDATION_ERROR",
+        );
       }
 
       // Re-throw OpenRouterError instances
@@ -231,7 +270,10 @@ export class OpenRouterService {
       }
 
       // Handle unexpected errors
-      throw new OpenRouterError("An unexpected error occurred", "UNEXPECTED_ERROR");
+      throw new OpenRouterError(
+        "An unexpected error occurred",
+        "UNEXPECTED_ERROR",
+      );
     }
   }
 
@@ -250,7 +292,10 @@ export class OpenRouterService {
       }
 
       if (!this.currentUserMessage) {
-        throw new OpenRouterError("User message is required", "MISSING_USER_MESSAGE");
+        throw new OpenRouterError(
+          "User message is required",
+          "MISSING_USER_MESSAGE",
+        );
       }
 
       messages.push({
@@ -285,7 +330,9 @@ export class OpenRouterService {
   /**
    * Executes a request to the OpenRouter API with retry logic
    */
-  private async executeRequest(requestPayload: RequestPayload): Promise<ApiResponse> {
+  private async executeRequest(
+    requestPayload: RequestPayload,
+  ): Promise<ApiResponse> {
     let lastError: Error | null = null;
     let attempt = 0;
 
@@ -305,7 +352,11 @@ export class OpenRouterService {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          throw new OpenRouterError(errorData.message || `HTTP error ${response.status}`, "API_ERROR", response.status);
+          throw new OpenRouterError(
+            errorData.message || `HTTP error ${response.status}`,
+            "API_ERROR",
+            response.status,
+          );
         }
 
         const data = await response.json();
@@ -314,15 +365,22 @@ export class OpenRouterService {
         lastError = error as Error;
 
         // Log retry attempts
-        this.logger.warn(`Request failed, attempt ${attempt + 1} of ${this.maxRetries}`, {
-          attempt: attempt + 1,
-          maxRetries: this.maxRetries,
-          errorCode: error instanceof OpenRouterError ? error.code : undefined,
-          status: error instanceof OpenRouterError ? error.status : undefined,
-        });
+        this.logger.warn(
+          `Request failed, attempt ${attempt + 1} of ${this.maxRetries}`,
+          {
+            attempt: attempt + 1,
+            maxRetries: this.maxRetries,
+            errorCode:
+              error instanceof OpenRouterError ? error.code : undefined,
+            status: error instanceof OpenRouterError ? error.status : undefined,
+          },
+        );
 
         // Don't retry on authentication errors or invalid requests
-        if (error instanceof OpenRouterError && (error.status === 401 || error.status === 400)) {
+        if (
+          error instanceof OpenRouterError &&
+          (error.status === 401 || error.status === 400)
+        ) {
           this.logger.error(error, {
             status: error.status,
             code: error.code,
@@ -338,7 +396,12 @@ export class OpenRouterService {
       }
     }
 
-    const maxRetriesError = lastError || new OpenRouterError("Maximum retry attempts exceeded", "MAX_RETRIES_EXCEEDED");
+    const maxRetriesError =
+      lastError ||
+      new OpenRouterError(
+        "Maximum retry attempts exceeded",
+        "MAX_RETRIES_EXCEEDED",
+      );
 
     this.logger.error(maxRetriesError, {
       attempts: attempt,

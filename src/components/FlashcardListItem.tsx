@@ -12,7 +12,12 @@ interface FlashcardListItemProps {
   onEdit: (front: string, back: string) => void;
 }
 
-export function FlashcardListItem({ flashcard, onAccept, onReject, onEdit }: FlashcardListItemProps) {
+export function FlashcardListItem({
+  flashcard,
+  onAccept,
+  onReject,
+  onEdit,
+}: FlashcardListItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedFront, setEditedFront] = useState(flashcard.front);
   const [editedBack, setEditedBack] = useState(flashcard.back);
@@ -29,7 +34,7 @@ export function FlashcardListItem({ flashcard, onAccept, onReject, onEdit }: Fla
       className={cn(
         "border rounded-lg p-4 space-y-3 transition-colors h-full",
         flashcard.accepted ? "bg-green-50/50 border-green-200" : "bg-white",
-        !flashcard.accepted && "opacity-75"
+        !flashcard.accepted && "opacity-75",
       )}
     >
       <div className="flex justify-between items-start gap-4">
@@ -44,7 +49,9 @@ export function FlashcardListItem({ flashcard, onAccept, onReject, onEdit }: Fla
                   className="resize-none"
                   maxLength={200}
                 />
-                <div className="text-sm text-muted-foreground">{editedFront.length}/200 characters</div>
+                <div className="text-sm text-muted-foreground">
+                  {editedFront.length}/200 characters
+                </div>
               </div>
               <div className="space-y-2">
                 <Textarea
@@ -54,7 +61,9 @@ export function FlashcardListItem({ flashcard, onAccept, onReject, onEdit }: Fla
                   className="resize-none"
                   maxLength={500}
                 />
-                <div className="text-sm text-muted-foreground">{editedBack.length}/500 characters</div>
+                <div className="text-sm text-muted-foreground">
+                  {editedBack.length}/500 characters
+                </div>
               </div>
             </>
           ) : (
@@ -71,17 +80,28 @@ export function FlashcardListItem({ flashcard, onAccept, onReject, onEdit }: Fla
               size="icon"
               onClick={handleSave}
               disabled={
-                editedFront.length > 200 || editedBack.length > 500 || !editedFront.trim() || !editedBack.trim()
+                editedFront.length > 200 ||
+                editedBack.length > 500 ||
+                !editedFront.trim() ||
+                !editedBack.trim()
               }
             >
               <Save className="h-4 w-4" />
             </Button>
           ) : (
             <>
-              <Button size="icon" variant={flashcard.accepted ? "default" : "outline"} onClick={onAccept}>
+              <Button
+                size="icon"
+                variant={flashcard.accepted ? "default" : "outline"}
+                onClick={onAccept}
+              >
                 <Check className="h-4 w-4" />
               </Button>
-              <Button size="icon" variant="outline" onClick={() => setIsEditing(true)}>
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => setIsEditing(true)}
+              >
                 <Edit2 className="h-4 w-4" />
               </Button>
               <Button size="icon" variant="outline" onClick={onReject}>
@@ -92,7 +112,9 @@ export function FlashcardListItem({ flashcard, onAccept, onReject, onEdit }: Fla
         </div>
       </div>
 
-      {flashcard.edited && <div className="text-sm text-muted-foreground">Edited</div>}
+      {flashcard.edited && (
+        <div className="text-sm text-muted-foreground">Edited</div>
+      )}
     </div>
   );
 }

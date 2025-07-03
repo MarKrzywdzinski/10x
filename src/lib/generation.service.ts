@@ -1,5 +1,8 @@
 import crypto from "crypto";
-import type { FlashcardProposalDto, GenerationCreateResponseDto } from "../types";
+import type {
+  FlashcardProposalDto,
+  GenerationCreateResponseDto,
+} from "../types";
 import type { SupabaseClient } from "../db/supabase.client";
 import { OpenRouterService } from "./openrouter.service";
 import { OpenRouterError } from "./openrouter.types";
@@ -10,7 +13,7 @@ export class GenerationService {
 
   constructor(
     private readonly supabase: SupabaseClient,
-    openRouterConfig?: { apiKey: string; referer?: string; title?: string }
+    openRouterConfig?: { apiKey: string; referer?: string; title?: string },
   ) {
     if (!openRouterConfig?.apiKey) {
       throw new Error("OpenRouter API key is required");
@@ -56,9 +59,14 @@ Focus on important facts, definitions, concepts, and relationships.`);
     });
   }
 
-  async generateFlashcards(sourceText: string): Promise<GenerationCreateResponseDto> {
+  async generateFlashcards(
+    sourceText: string,
+  ): Promise<GenerationCreateResponseDto> {
     // eslint-disable-next-line no-console
-    console.log("[generateFlashcards] called with sourceText length:", sourceText?.length);
+    console.log(
+      "[generateFlashcards] called with sourceText length:",
+      sourceText?.length,
+    );
     try {
       // 1. Calculate metadata
       const startTime = Date.now();
@@ -82,7 +90,14 @@ Focus on important facts, definitions, concepts, and relationships.`);
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("[generateFlashcards] error:", error, "type:", typeof error, "stringified:", JSON.stringify(error));
+      console.error(
+        "[generateFlashcards] error:",
+        error,
+        "type:",
+        typeof error,
+        "stringified:",
+        JSON.stringify(error),
+      );
       // Log error and save to generation_error_logs
       await this.logGenerationError(error, {
         sourceTextHash: await this.calculateHash(sourceText),
@@ -99,7 +114,9 @@ Focus on important facts, definitions, concepts, and relationships.`);
   private async callAIService(text: string): Promise<FlashcardProposalDto[]> {
     try {
       // Set the user message with the source text
-      this.openRouter.setUserMessage(`Generate flashcards from the following text:\n\n${text}`);
+      this.openRouter.setUserMessage(
+        `Generate flashcards from the following text:\n\n${text}`,
+      );
 
       // Get response from OpenRouter
       const response = await this.openRouter.sendChatMessage();
@@ -160,7 +177,7 @@ Focus on important facts, definitions, concepts, and relationships.`);
     data: {
       sourceTextHash: string;
       sourceTextLength: number;
-    }
+    },
   ): Promise<void> {
     const {
       data: { user },

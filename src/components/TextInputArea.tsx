@@ -8,7 +8,11 @@ interface TextInputAreaProps {
   disabled?: boolean;
 }
 
-export function TextInputArea({ value, onChange, disabled }: TextInputAreaProps) {
+export function TextInputArea({
+  value,
+  onChange,
+  disabled,
+}: TextInputAreaProps) {
   const charCount = value.length;
   const isValid = charCount >= 1000 && charCount <= 10000;
   const showError = charCount > 0 && !isValid;
@@ -23,14 +27,24 @@ export function TextInputArea({ value, onChange, disabled }: TextInputAreaProps)
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         placeholder="Paste your text here (1000-10000 characters)"
-        className={cn("min-h-[200px] max-h-[200px] resize-y", showError && "border-red-500 focus-visible:ring-red-500")}
+        className={cn(
+          "min-h-[200px] max-h-[200px] resize-y",
+          showError && "border-red-500 focus-visible:ring-red-500",
+        )}
       />
 
-      <div className={cn("text-sm", showError ? "text-red-500" : "text-muted-foreground")}>
+      <div
+        className={cn(
+          "text-sm",
+          showError ? "text-red-500" : "text-muted-foreground",
+        )}
+      >
         {charCount} / 10000 characters
         {showError && (
           <span className="ml-2">
-            {charCount < 1000 ? "(Minimum 1000 characters required)" : "(Maximum 10000 characters exceeded)"}
+            {charCount < 1000
+              ? "(Minimum 1000 characters required)"
+              : "(Maximum 10000 characters exceeded)"}
           </span>
         )}
       </div>

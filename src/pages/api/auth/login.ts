@@ -10,19 +10,31 @@ const loginSchema = z.object({
 });
 
 export const POST: APIRoute = async ({ request, cookies }) => {
-  const supabase = createSupabaseServerInstance({ cookies, headers: request.headers });
+  const supabase = createSupabaseServerInstance({
+    cookies,
+    headers: request.headers,
+  });
 
   const body = await request.json();
   const parse = loginSchema.safeParse(body);
   if (!parse.success) {
-    return new Response(JSON.stringify({ error: "Invalid payload", details: parse.error.flatten() }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        error: "Invalid payload",
+        details: parse.error.flatten(),
+      }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 
   const { email, password } = parse.data;
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
     return new Response(JSON.stringify({ error: error.message }), {
@@ -39,8 +51,11 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     });
   }
 
-  return new Response(JSON.stringify({ user: { id: data.user.id, email: data.user.email } }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  return new Response(
+    JSON.stringify({ user: { id: data.user.id, email: data.user.email } }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    },
+  );
 };

@@ -46,7 +46,9 @@ export function RegisterForm() {
         return;
       }
 
-      setSuccess("Rejestracja zakończona. Sprawdź skrzynkę e-mail, aby potwierdzić konto.");
+      setSuccess(
+        "Rejestracja zakończona. Sprawdź skrzynkę e-mail, aby potwierdzić konto.",
+      );
       setEmail("");
       setPassword("");
       setConfirmPassword("");

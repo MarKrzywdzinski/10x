@@ -10,15 +10,24 @@ const registerSchema = z.object({
 });
 
 export const POST: APIRoute = async ({ request, cookies }) => {
-  const supabase = createSupabaseServerInstance({ headers: request.headers, cookies });
+  const supabase = createSupabaseServerInstance({
+    headers: request.headers,
+    cookies,
+  });
 
   const body = await request.json();
   const parse = registerSchema.safeParse(body);
   if (!parse.success) {
-    return new Response(JSON.stringify({ error: "Invalid payload", details: parse.error.flatten() }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        error: "Invalid payload",
+        details: parse.error.flatten(),
+      }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 
   const { email, password } = parse.data;
@@ -37,8 +46,11 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     });
   }
 
-  return new Response(JSON.stringify({ user: { id: data.user?.id, email: data.user?.email } }), {
-    status: 201,
-    headers: { "Content-Type": "application/json" },
-  });
+  return new Response(
+    JSON.stringify({ user: { id: data.user?.id, email: data.user?.email } }),
+    {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
+    },
+  );
 };

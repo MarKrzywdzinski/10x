@@ -18,6 +18,7 @@
 ## Tech Stack
 
 **Frontend:**
+
 - Astro 5
 - React 19
 - TypeScript 5
@@ -25,16 +26,19 @@
 - Shadcn/ui
 
 **Backend:**
+
 - Supabase (PostgreSQL) for data storage and authentication
 - AI integration via OpenRouter.ai API
 
 **CI/CD / Deployment:**
+
 - GitHub Actions for continuous integration and deployment
 - DigitalOcean for hosting using Docker images
 
 ## Getting Started Locally
 
 1. **Clone the repository:**
+
    ```sh
    git clone https://github.com/przeprogramowani/10x-cards.git
    cd 10x-cards
@@ -42,11 +46,13 @@
 
 2. **Ensure you are using the correct Node version:**
    This project uses the Node version specified in the `.nvmrc` file. Currently it's **22.14.0**.
+
    ```sh
    nvm use
    ```
 
 3. **Install dependencies:**
+
    ```sh
    npm install
    ```
@@ -90,12 +96,15 @@ This project is licensed under the MIT License.
 ## Testing Stack
 
 ### Testy jednostkowe i integracyjne
+
 - **Vitest** — szybki runner zgodny z API Jest/Testing Library
 - **@testing-library/react** — deklaratywne testy komponentów (dostępność, zachowanie)
 
 ### Testy end-to-end (E2E)
+
 - **Playwright** — cross-browser (Chromium, WebKit, Firefox), trace viewer, emulacja mobile
 
 Dodatkowo wykorzystywane są:
+
 - **MSW (Mock Service Worker)** do mockowania żądań HTTP w testach
 - **k6** do testów wydajności API

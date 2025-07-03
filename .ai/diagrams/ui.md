@@ -10,12 +10,12 @@
    • Supabase warstwa: `db/supabase.client.ts` + tabele `auth.users`, `flashcards`, `generations` (z RLS)
 
 2. Główne strony ↔ komponenty
-   • `/login.astro`  →  `LoginForm` (React)
+   • `/login.astro` → `LoginForm` (React)
    • `/register.astro` → `RegisterForm`
    • `/reset-password.astro` → `ResetPasswordRequestForm`
    • `/reset-password/[token].astro` → `ResetPasswordConfirmForm`
-   • `/generate.astro`  →  `FlashcardGenerationView`, `GenerateButton`, `ErrorNotification` (wymaga aktywnej sesji)
-   • `/my-cards.astro`  →  `FlashcardList`, `BulkSaveButton`
+   • `/generate.astro` → `FlashcardGenerationView`, `GenerateButton`, `ErrorNotification` (wymaga aktywnej sesji)
+   • `/my-cards.astro` → `FlashcardList`, `BulkSaveButton`
 
 3. Przepływ danych (happy-path):
    a. Użytkownik wchodzi na stronę publiczną → Layout ładuje się bez stanu auth.
@@ -28,7 +28,7 @@
 
 4. Opisy komponentów (skrótowo)
    • LoginForm / RegisterForm – walidacja danych, obsługa błędów, integracja z Supabase Auth.
-   • ResetPassword* – przepływ "zapomniałem hasła".
+   • ResetPassword\* – przepływ "zapomniałem hasła".
    • AuthProvider – globalny kontekst użytkownika (React), exposes `signOut`.
    • ProtectedRoute – opcjonalny wrapper React (np. przyprowadzaniu dynamicznych widoków).
    • Layout.astro – wspólna nawigacja, reaguje na `auth` bool i dane użytk.
@@ -37,6 +37,7 @@
 </architecture_analysis>
 
 <mermaid_diagram>
+
 ```mermaid
 flowchart TD
   %% ==== Public Pages ====
@@ -125,4 +126,5 @@ flowchart TD
   SupabaseAuth --> SupabaseDB
   DeleteAccAPI --> SupabaseDB
 ```
-</mermaid_diagram> 
+
+</mermaid_diagram>

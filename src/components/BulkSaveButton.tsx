@@ -12,7 +12,12 @@ interface BulkSaveButtonProps {
   onSuccess: () => void;
 }
 
-export function BulkSaveButton({ flashcards, generationId, disabled, onSuccess }: BulkSaveButtonProps) {
+export function BulkSaveButton({
+  flashcards,
+  generationId,
+  disabled,
+  onSuccess,
+}: BulkSaveButtonProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,7 +55,9 @@ export function BulkSaveButton({ flashcards, generationId, disabled, onSuccess }
 
       onSuccess();
     } catch (error) {
-      setError(error instanceof Error ? error.message : "An unexpected error occurred");
+      setError(
+        error instanceof Error ? error.message : "An unexpected error occurred",
+      );
     } finally {
       setIsSaving(false);
     }
@@ -62,7 +69,9 @@ export function BulkSaveButton({ flashcards, generationId, disabled, onSuccess }
       <div className="flex flex-col sm:flex-row gap-2 max-w-md">
         <Button
           onClick={() => handleSave(true)}
-          disabled={disabled || isSaving || !flashcards.some((card) => card.accepted)}
+          disabled={
+            disabled || isSaving || !flashcards.some((card) => card.accepted)
+          }
           className="flex-1"
         >
           {isSaving ? (
@@ -75,7 +84,12 @@ export function BulkSaveButton({ flashcards, generationId, disabled, onSuccess }
           )}
         </Button>
 
-        <Button onClick={() => handleSave(false)} disabled={disabled || isSaving} variant="outline" className="flex-1">
+        <Button
+          onClick={() => handleSave(false)}
+          disabled={disabled || isSaving}
+          variant="outline"
+          className="flex-1"
+        >
           {isSaving ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

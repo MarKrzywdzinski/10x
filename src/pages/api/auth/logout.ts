@@ -4,7 +4,10 @@ import { createSupabaseServerInstance } from "@/db/supabase.client";
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, cookies }) => {
-  const supabase = createSupabaseServerInstance({ headers: request.headers, cookies });
+  const supabase = createSupabaseServerInstance({
+    headers: request.headers,
+    cookies,
+  });
 
   const { error } = await supabase.auth.signOut();
   if (error) {

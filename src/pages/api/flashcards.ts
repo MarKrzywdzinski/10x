@@ -19,14 +19,18 @@ const flashcardSchema = z
       if (data.source === "manual" && data.generation_id !== null) {
         return false;
       }
-      if ((data.source === "ai-full" || data.source === "ai-edited") && data.generation_id === null) {
+      if (
+        (data.source === "ai-full" || data.source === "ai-edited") &&
+        data.generation_id === null
+      ) {
         return false;
       }
       return true;
     },
     {
-      message: "generation_id must be null for manual source and non-null for ai-full/ai-edited sources",
-    }
+      message:
+        "generation_id must be null for manual source and non-null for ai-full/ai-edited sources",
+    },
   );
 
 // Validation schema for the entire request body
@@ -52,14 +56,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
     const command = validationResult.data as FlashcardsCreateCommand;
 
     // Validate that all referenced generation_ids exist
-    const generationIds = command.flashcards.map((f) => f.generation_id).filter((id): id is number => id !== null);
+    const generationIds = command.flashcards
+      .map((f) => f.generation_id)
+      .filter((id): id is number => id !== null);
 
     // Create flashcards using service
     const flashcardService = new FlashcardService(locals.supabase);
@@ -89,13 +95,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
           {
             status: 400,
             headers: { "Content-Type": "application/json" },
-          }
+          },
         );
       }
       throw error;
     }
 
-    const createdFlashcards = await flashcardService.createBatch(user.id, command.flashcards);
+    const createdFlashcards = await flashcardService.createBatch(
+      user.id,
+      command.flashcards,
+    );
 
     return new Response(JSON.stringify({ flashcards: createdFlashcards }), {
       status: 201,
@@ -115,7 +124,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
