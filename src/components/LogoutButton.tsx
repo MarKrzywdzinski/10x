@@ -8,7 +8,6 @@ export default function LogoutButton() {
         credentials: "include",
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error("Logout error", err);
     } finally {
       window.location.href = "/";

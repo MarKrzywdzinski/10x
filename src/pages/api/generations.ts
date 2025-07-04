@@ -62,7 +62,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   } catch (error) {
     // Log full error details for debugging
-    // eslint-disable-next-line no-console
     console.error("Error processing generation request:", error);
     if (error instanceof Error) {
       return new Response(

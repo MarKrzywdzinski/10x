@@ -33,7 +33,6 @@ export function ResetPasswordConfirmForm({
     try {
       setIsLoading(true);
       await new Promise((res) => setTimeout(res, 800));
-      // eslint-disable-next-line no-console
       console.log("Reset confirm payload", { token, password });
       setMessage("Hasło zostało zaktualizowane (mock)");
       setPassword("");

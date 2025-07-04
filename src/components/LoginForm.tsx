@@ -56,7 +56,6 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
       window.location.href = "/generate";
     } catch (err) {
       // Log error for debugging, but don't expose details to user
-      // eslint-disable-next-line no-console
       console.error("Login error:", err);
       setError("Wystąpił błąd przy łączeniu z serwerem");
     } finally {
