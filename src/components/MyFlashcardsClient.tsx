@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FlashcardList } from "../components/FlashcardList";
+import { FlashcardList } from "./FlashcardList";
 import type { FlashcardProposalViewModel } from "./FlashcardGenerationView";
 
 export default function MyFlashcardsClient() {

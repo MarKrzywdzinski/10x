@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -20,19 +21,19 @@ export function TextInputArea({
   return (
     <div className="space-y-2">
       <Label htmlFor="source-text">Source Text</Label>
-
       <Textarea
         id="source-text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          onChange(e.target.value)
+        }
         disabled={disabled}
         placeholder="Paste your text here (1000-10000 characters)"
         className={cn(
           "min-h-[200px] max-h-[200px] resize-y",
-          showError && "border-red-500 focus-visible:ring-red-500",
+          showError ? "border-red-500 focus-visible:ring-red-500" : "",
         )}
       />
-
       <div
         className={cn(
           "text-sm",

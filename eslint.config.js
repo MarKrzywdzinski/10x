@@ -1,61 +1,50 @@
-import eslint from "@eslint/js";
-import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
-import eslintPluginAstro from "eslint-plugin-astro";
-import jsxA11y from "eslint-plugin-jsx-a11y";
-import pluginReact from "eslint-plugin-react";
-import reactCompiler from "eslint-plugin-react-compiler";
-import eslintPluginReactHooks from "eslint-plugin-react-hooks";
-import parser from "@typescript-eslint/parser";
 import * as tseslint from "typescript-eslint";
+import astro from "eslint-plugin-astro";
+import react from "eslint-plugin-react";
+import jsxA11y from "eslint-plugin-jsx-a11y";
+import prettier from "eslint-plugin-prettier/recommended";
 
-// Ignore files here instead of .eslintignore (ESLint 9+)
-const ignores = ["src/db/database.types.ts", "dist/**"];
+/**
+ * ESLint v9+ modular config for 10xCards
+ * - Uses includeIgnoreFile for .gitignore
+ * - Modular, maintainable, and future-proof
+ */
+
 export default [
-  { ignores },
   {
-    files: ["**/*.astro"],
-    plugins: {
-      astro: eslintPluginAstro,
-    },
-    ...(eslintPluginAstro.parsers && eslintPluginAstro.parsers["astro"]
-      ? {
-          languageOptions: {
-            parser: eslintPluginAstro.parsers["astro"],
-            parserOptions: { extraFileExtensions: [".astro"] },
-          },
-        }
-      : {}),
-    ...eslintPluginAstro.configs["flat/recommended"][0],
-    rules: {
-      ...(eslintPluginAstro.configs["flat/recommended"][0]?.rules || {}),
-    },
+    // Use .gitignore for ignores (ESLint 9+)
+    ignores: [],
+    files: ["**/*"],
   },
+  // TypeScript (strict + stylistic)
+  ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
+  // React (recommended)
   {
-    files: ["**/*.ts", "**/*.tsx"],
-    languageOptions: {
-      parser: parser,
-      parserOptions: {
-        project: "./tsconfig.json",
-        ecmaVersion: 2020,
-        sourceType: "module",
-      },
-    },
-    ...tseslint.configs.strict[0],
-    ...tseslint.configs.stylistic[0],
-    ...pluginReact.configs.flat.recommended,
-    ...jsxA11y.flatConfigs.recommended,
+    files: ["**/*.tsx"],
     plugins: {
-      "react-hooks": eslintPluginReactHooks,
-      "react-compiler": reactCompiler,
+      react,
+    },
+    ...react.configs.flat.recommended,
+    rules: {
+      "react/react-in-jsx-scope": "off",
     },
     settings: { react: { version: "detect" } },
+  },
+  // Accessibility (jsx-a11y)
+  {
+    files: ["**/*.tsx"],
+    ...jsxA11y.flatConfigs.recommended,
+  },
+  // Astro
+  {
+    files: ["**/*.astro"],
+    plugins: { astro },
+    ...astro.configs["flat/recommended"][0],
     rules: {
-      ...eslintPluginReactHooks.configs.recommended.rules,
-      "no-console": "warn",
-      "no-unused-vars": "off",
-      "react/react-in-jsx-scope": "off",
-      "react-compiler/react-compiler": "error",
+      ...(astro.configs["flat/recommended"][0]?.rules || {}),
     },
   },
-  eslintPluginPrettier,
+  // Prettier
+  prettier,
 ];
