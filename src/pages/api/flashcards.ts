@@ -30,7 +30,7 @@ const flashcardSchema = z
     {
       message:
         "generation_id must be null for manual source and non-null for ai-full/ai-edited sources",
-    },
+    }
   );
 
 // Validation schema for the entire request body
@@ -56,7 +56,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
-        },
+        }
       );
     }
 
@@ -95,23 +95,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
           {
             status: 400,
             headers: { "Content-Type": "application/json" },
-          },
+          }
         );
       }
       throw error;
     }
 
-    const createdFlashcards = await flashcardService.createBatch(
-      user.id,
-      command.flashcards,
-    );
+    const createdFlashcards = await flashcardService.createBatch(user.id, command.flashcards);
 
     return new Response(JSON.stringify({ flashcards: createdFlashcards }), {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Error creating flashcards:", error);
 
     if (error instanceof DatabaseError) {
@@ -124,7 +120,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
-        },
+        }
       );
     }
 

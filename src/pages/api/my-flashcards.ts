@@ -16,9 +16,7 @@ export async function GET({ request, cookies }) {
   }
   const { data: flashcards, error } = await supabase
     .from("flashcards")
-    .select(
-      "id, front, back, source, generation_id, created_at, updated_at, user_id",
-    )
+    .select("id, front, back, source, generation_id, created_at, updated_at, user_id")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
   if (error) {

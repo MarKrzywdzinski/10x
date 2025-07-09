@@ -3,9 +3,7 @@ import { FlashcardList } from "./FlashcardList";
 import type { FlashcardProposalViewModel } from "./FlashcardGenerationView";
 
 export default function MyFlashcardsClient() {
-  const [flashcards, setFlashcards] = useState<FlashcardProposalViewModel[]>(
-    [],
-  );
+  const [flashcards, setFlashcards] = useState<FlashcardProposalViewModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -28,7 +26,7 @@ export default function MyFlashcardsClient() {
               accepted: false,
               edited: false,
               source: f.source === "ai-edited" ? "ai-edited" : "ai-full",
-            })),
+            }))
           );
         }
       } catch {
@@ -44,23 +42,19 @@ export default function MyFlashcardsClient() {
   // Handlery jak w /generate
   const handleAccept = (index: number) => {
     setFlashcards((prev) =>
-      prev.map((card, i) => (i === index ? { ...card, accepted: true } : card)),
+      prev.map((card, i) => (i === index ? { ...card, accepted: true } : card))
     );
   };
   const handleReject = (index: number) => {
     setFlashcards((prev) =>
-      prev.map((card, i) =>
-        i === index ? { ...card, accepted: false } : card,
-      ),
+      prev.map((card, i) => (i === index ? { ...card, accepted: false } : card))
     );
   };
   const handleEdit = (index: number, front: string, back: string) => {
     setFlashcards((prev) =>
       prev.map((card, i) =>
-        i === index
-          ? { ...card, front, back, edited: true, source: "ai-edited" as const }
-          : card,
-      ),
+        i === index ? { ...card, front, back, edited: true, source: "ai-edited" as const } : card
+      )
     );
   };
 

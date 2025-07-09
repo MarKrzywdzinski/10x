@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import type {
-  FlashcardProposalDto,
-  GenerationCreateResponseDto,
-} from "@/types";
+import type { FlashcardProposalDto, GenerationCreateResponseDto } from "@/types";
 import { TextInputArea } from "./TextInputArea";
 import { GenerateButton } from "./GenerateButton";
 import { FlashcardList } from "./FlashcardList";
@@ -11,10 +8,7 @@ import { BulkSaveButton } from "./BulkSaveButton";
 import { ErrorNotification } from "./ErrorNotification";
 import { Button } from "./ui/button";
 
-export type FlashcardProposalViewModel = Omit<
-  FlashcardProposalDto,
-  "source"
-> & {
+export type FlashcardProposalViewModel = Omit<FlashcardProposalDto, "source"> & {
   accepted: boolean;
   edited: boolean;
   source: "ai-full" | "ai-edited";
@@ -25,9 +19,7 @@ export function FlashcardGenerationView() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [generationId, setGenerationId] = useState<number | null>(null);
-  const [flashcards, setFlashcards] = useState<FlashcardProposalViewModel[]>(
-    [],
-  );
+  const [flashcards, setFlashcards] = useState<FlashcardProposalViewModel[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   // Check auth status on mount
@@ -72,12 +64,10 @@ export function FlashcardGenerationView() {
           accepted: false,
           edited: false,
           source: "ai-full" as const,
-        })),
+        }))
       );
     } catch (error) {
-      setErrorMessage(
-        error instanceof Error ? error.message : "An unexpected error occurred",
-      );
+      setErrorMessage(error instanceof Error ? error.message : "An unexpected error occurred");
     } finally {
       setIsLoading(false);
     }
@@ -85,25 +75,21 @@ export function FlashcardGenerationView() {
 
   const handleFlashcardAccept = (index: number) => {
     setFlashcards((prev) =>
-      prev.map((card, i) => (i === index ? { ...card, accepted: true } : card)),
+      prev.map((card, i) => (i === index ? { ...card, accepted: true } : card))
     );
   };
 
   const handleFlashcardReject = (index: number) => {
     setFlashcards((prev) =>
-      prev.map((card, i) =>
-        i === index ? { ...card, accepted: false } : card,
-      ),
+      prev.map((card, i) => (i === index ? { ...card, accepted: false } : card))
     );
   };
 
   const handleFlashcardEdit = (index: number, front: string, back: string) => {
     setFlashcards((prev) =>
       prev.map((card, i) =>
-        i === index
-          ? { ...card, front, back, edited: true, source: "ai-edited" as const }
-          : card,
-      ),
+        i === index ? { ...card, front, back, edited: true, source: "ai-edited" as const } : card
+      )
     );
   };
 
@@ -119,17 +105,11 @@ export function FlashcardGenerationView() {
 
       {isLoggedIn ? (
         <>
-          <TextInputArea
-            value={textValue}
-            onChange={handleTextChange}
-            disabled={isLoading}
-          />
+          <TextInputArea value={textValue} onChange={handleTextChange} disabled={isLoading} />
 
           <GenerateButton
             onClick={handleGenerateFlashcards}
-            disabled={
-              isLoading || textValue.length < 1000 || textValue.length > 10000
-            }
+            disabled={isLoading || textValue.length < 1000 || textValue.length > 10000}
             isLoading={isLoading}
           />
         </>

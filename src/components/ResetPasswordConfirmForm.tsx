@@ -7,9 +7,7 @@ interface ResetPasswordConfirmFormProps {
   token?: string;
 }
 
-export function ResetPasswordConfirmForm({
-  token,
-}: ResetPasswordConfirmFormProps) {
+export function ResetPasswordConfirmForm({ token }: ResetPasswordConfirmFormProps) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);

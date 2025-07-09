@@ -34,7 +34,7 @@ export function FlashcardListItem({
       className={cn(
         "border rounded-lg p-4 space-y-3 transition-colors h-full",
         flashcard.accepted ? "bg-green-50/50 border-green-200" : "bg-white",
-        !flashcard.accepted && "opacity-75",
+        !flashcard.accepted && "opacity-75"
       )}
     >
       <div className="flex justify-between items-start gap-4">
@@ -97,11 +97,7 @@ export function FlashcardListItem({
               >
                 <Check className="h-4 w-4" />
               </Button>
-              <Button
-                size="icon"
-                variant="outline"
-                onClick={() => setIsEditing(true)}
-              >
+              <Button size="icon" variant="outline" onClick={() => setIsEditing(true)}>
                 <Edit2 className="h-4 w-4" />
               </Button>
               <Button size="icon" variant="outline" onClick={onReject}>
@@ -112,9 +108,7 @@ export function FlashcardListItem({
         </div>
       </div>
 
-      {flashcard.edited && (
-        <div className="text-sm text-muted-foreground">Edited</div>
-      )}
+      {flashcard.edited && <div className="text-sm text-muted-foreground">Edited</div>}
     </div>
   );
 }

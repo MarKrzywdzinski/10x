@@ -7,10 +7,7 @@ import type { Database } from "./database.types";
 const supabaseUrl = import.meta.env.SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.SUPABASE_KEY;
 
-export const supabaseClient = createClient<Database>(
-  supabaseUrl,
-  supabaseAnonKey,
-);
+export const supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey);
 export type SupabaseClient = typeof supabaseClient;
 
 // Client-side instance (uses public anon key)
@@ -18,7 +15,7 @@ export const supabaseBrowserClient =
   typeof window !== "undefined"
     ? createClient<Database>(
         import.meta.env.PUBLIC_SUPABASE_URL,
-        import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+        import.meta.env.PUBLIC_SUPABASE_ANON_KEY
       )
     : (supabaseClient as unknown as ReturnType<typeof createClient<Database>>);
 
@@ -31,9 +28,7 @@ export const cookieOptions: CookieOptionsWithName = {
   sameSite: "lax",
 };
 
-function parseCookieHeader(
-  cookieHeader: string,
-): { name: string; value: string }[] {
+function parseCookieHeader(cookieHeader: string): { name: string; value: string }[] {
   return cookieHeader
     .split(";")
     .filter(Boolean)
@@ -58,11 +53,11 @@ export const createSupabaseServerInstance = (context: {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) =>
-            context.cookies.set(name, value, options),
+            context.cookies.set(name, value, options)
           );
         },
       },
-    },
+    }
   );
 
   return supabase;

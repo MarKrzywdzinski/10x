@@ -5,11 +5,9 @@ import type { Database } from "./db/database.types";
 // Aliases for base database types extracted from the Database model definitions
 // ------------------------------------------------------------------------------------------------
 export type Flashcard = Database["public"]["Tables"]["flashcards"]["Row"];
-export type FlashcardInsert =
-  Database["public"]["Tables"]["flashcards"]["Insert"];
+export type FlashcardInsert = Database["public"]["Tables"]["flashcards"]["Insert"];
 export type Generation = Database["public"]["Tables"]["generations"]["Row"];
-export type GenerationErrorLog =
-  Database["public"]["Tables"]["generation_error_logs"]["Row"];
+export type GenerationErrorLog = Database["public"]["Tables"]["generation_error_logs"]["Row"];
 
 // ------------------------------------------------------------------------------------------------
 // 1. Flashcard DTO
@@ -17,13 +15,7 @@ export type GenerationErrorLog =
 // ------------------------------------------------------------------------------------------------
 export type FlashcardDto = Pick<
   Flashcard,
-  | "id"
-  | "front"
-  | "back"
-  | "source"
-  | "generation_id"
-  | "created_at"
-  | "updated_at"
+  "id" | "front" | "back" | "source" | "generation_id" | "created_at" | "updated_at"
 >;
 
 // ------------------------------------------------------------------------------------------------

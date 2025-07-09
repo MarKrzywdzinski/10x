@@ -11,15 +11,12 @@ export class Logger {
   error(error: Error, metadata?: Record<string, unknown>) {
     const sanitizedMetadata = this.sanitizeMetadata(metadata);
 
-    // eslint-disable-next-line no-console
     console.error({
       context: this.context,
       error: {
         name: error.name,
         message: error.message,
-        ...(error instanceof Error && error.stack
-          ? { stack: error.stack }
-          : {}),
+        ...(error instanceof Error && error.stack ? { stack: error.stack } : {}),
       },
       ...(sanitizedMetadata ? { metadata: sanitizedMetadata } : {}),
       timestamp: new Date().toISOString(),
@@ -32,7 +29,6 @@ export class Logger {
   warn(message: string, metadata?: Record<string, unknown>) {
     const sanitizedMetadata = this.sanitizeMetadata(metadata);
 
-    // eslint-disable-next-line no-console
     console.warn({
       context: this.context,
       message,
@@ -45,24 +41,16 @@ export class Logger {
    * Removes sensitive data from metadata before logging
    */
   private sanitizeMetadata(
-    metadata?: Record<string, unknown>,
+    metadata?: Record<string, unknown>
   ): Record<string, unknown> | undefined {
     if (!metadata) return undefined;
 
-    const sensitiveKeys = [
-      "apiKey",
-      "token",
-      "password",
-      "secret",
-      "authorization",
-    ];
+    const sensitiveKeys = ["apiKey", "token", "password", "secret", "authorization"];
     const sanitized = { ...metadata };
 
     for (const key of Object.keys(sanitized)) {
       if (
-        sensitiveKeys.some((sensitiveKey) =>
-          key.toLowerCase().includes(sensitiveKey.toLowerCase()),
-        )
+        sensitiveKeys.some((sensitiveKey) => key.toLowerCase().includes(sensitiveKey.toLowerCase()))
       ) {
         sanitized[key] = "[REDACTED]";
       }

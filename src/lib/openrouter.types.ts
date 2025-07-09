@@ -48,7 +48,7 @@ export class OpenRouterError extends Error {
   constructor(
     message: string,
     public readonly code: string,
-    public readonly status?: number,
+    public readonly status?: number
   ) {
     super(message);
     this.name = "OpenRouterError";
@@ -97,6 +97,6 @@ export const apiResponseSchema = z.object({
         content: z.string(),
         role: z.string(),
       }),
-    }),
+    })
   ),
 });
