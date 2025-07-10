@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import LogoutButton from "@/components/LogoutButton";
 import { Button } from "@/components/ui/button";

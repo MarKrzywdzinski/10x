@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import { FlashcardList } from "./FlashcardList";
 import type { FlashcardProposalViewModel } from "./FlashcardGenerationView";

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from "react";
 import type { FlashcardProposalDto, GenerationCreateResponseDto } from "@/types";
 import { TextInputArea } from "./TextInputArea";
