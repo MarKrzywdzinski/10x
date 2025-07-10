@@ -96,7 +96,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 10xcards
+          projectName: 10x # Nazwa projektu w Cloudflare Pages
           directory: dist
           branch: main
           wranglerVersion: '3'
