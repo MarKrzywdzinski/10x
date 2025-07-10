@@ -33,7 +33,7 @@
 **CI/CD / Deployment:**
 
 - GitHub Actions for continuous integration and deployment
-- DigitalOcean for hosting using Docker images
+- Cloudflare Pages for hosting the Astro application
 
 ## Getting Started Locally
 
