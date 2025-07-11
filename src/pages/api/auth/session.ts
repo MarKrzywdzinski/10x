@@ -12,18 +12,8 @@ export const GET: APIRoute = async ({ request, cookies }) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-<<<<<<< HEAD
   return new Response(JSON.stringify({ user: user ? { id: user.id, email: user.email } : null }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
-=======
-  return new Response(
-    JSON.stringify({ user: user ? { id: user.id, email: user.email } : null }),
-    {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    },
-  );
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
 };

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 10xCards
 
 ## Project Description
@@ -9,17 +8,15 @@
 
 - [Project Description](#project-description)
 - [Tech Stack](#tech-stack)
-- [Getting Started Locally](#getting-started-locally)
+- [Project Architecture](#project-architecture)
+- [API and Features](#api-and-features)
+- [Getting Started](#getting-started)
 - [Available Scripts](#available-scripts)
-- [Project Scope](#project-scope)
-- [Project Status](#project-status)
-- [License](#license)
-- [Testing Stack](#testing-stack)
+- [Testing](#testing)
 
 ## Tech Stack
 
 **Frontend:**
-
 - Astro 5
 - React 19
 - TypeScript 5
@@ -27,24 +24,12 @@
 - Shadcn/ui
 
 **Backend:**
-
 - Supabase (PostgreSQL) for data storage and authentication
 - AI integration via OpenRouter.ai API
 
 **CI/CD / Deployment:**
-
 - GitHub Actions for continuous integration and deployment
 - DigitalOcean for hosting using Docker images
-
-## Getting Started Locally
-
-1. **Clone the repository:**
-
-=======
-
-# 10xCards
-
-10xCards to aplikacja webowa umożliwiająca automatyczne generowanie fiszek (flashcards) z tekstu użytkownika przy użyciu AI (LLM, OpenRouter). Pozwala na szybkie tworzenie, edycję i zarządzanie fiszkami, zarówno automatycznie, jak i manualnie. Projekt oparty jest o nowoczesny stack frontendowy (Astro, React, Tailwind, TypeScript) oraz backendowy (Supabase, API Astro).
 
 ---
 
@@ -127,27 +112,23 @@ supabase/          // Konfiguracja i migracje bazy
 - `POST /api/auth/logout` – wylogowanie
 - `GET /api/auth/session` – status sesji
 
-### Kluczowe modele i walidacja
-- Fiszka: front, back, source (ai-full, ai-edited, manual), generation_id
-- Generacja: source_text, hash, liczba wygenerowanych, czas trwania
-- Walidacja wejścia: Zod (limity długości, typy, powiązania)
+### Key Models and Validation
+- Flashcard: front, back, source (ai-full, ai-edited, manual), generation_id
+- Generation: source_text, hash, number of generated cards, duration
+- Input validation: Zod (length limits, types, relationships)
 
-### Integracja AI
-- OpenRouter (LLM, np. GPT-4o-mini)
-- Konfigurowalny prompt systemowy
-- Walidacja i obsługa błędów AI
+### AI Integration
+- OpenRouter (LLM, e.g., GPT-4o-mini)
+- Configurable system prompt
+- AI error handling and validation
 
----
+## Getting Started
 
-## Uruchomienie projektu
-
-1. **Klonowanie repozytorium:**
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
+1. **Clone the repository:**
    ```sh
    git clone https://github.com/przeprogramowani/10x-cards.git
    cd 10x-cards
    ```
-<<<<<<< HEAD
 
 2. **Ensure you are using the correct Node version:**
    This project uses the Node version specified in the `.nvmrc` file. Currently it's **22.14.0**.
@@ -200,20 +181,16 @@ This project is licensed under the MIT License.
 
 ## Testing Stack
 
-### Testy jednostkowe i integracyjne
+### Unit and Integration Tests
+- **Vitest** — fast runner compatible with Jest/Testing Library API
+- **@testing-library/react** — declarative component tests (accessibility, behavior)
 
-- **Vitest** — szybki runner zgodny z API Jest/Testing Library
-- **@testing-library/react** — deklaratywne testy komponentów (dostępność, zachowanie)
+### End-to-End Tests (E2E)
+- **Playwright** — cross-browser (Chromium, WebKit, Firefox), trace viewer, mobile emulation
 
-### Testy end-to-end (E2E)
-
-- **Playwright** — cross-browser (Chromium, WebKit, Firefox), trace viewer, emulacja mobile
-
-Dodatkowo wykorzystywane są:
-
-- **MSW (Mock Service Worker)** do mockowania żądań HTTP w testach
-- **k6** do testów wydajności API
-=======
+Additional tools:
+- **MSW (Mock Service Worker)** for mocking HTTP requests in tests
+- **k6** for API performance testing
 2. **Node.js:**
    Użyj wersji z `.nvmrc` (np. 22.14.0):
    ```sh
@@ -262,4 +239,4 @@ Dodatkowo wykorzystywane są:
 ## Licencja
 
 MIT
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
+

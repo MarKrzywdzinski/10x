@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
-import React from 'react';
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
+import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
-function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+function Skeleton({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="skeleton"

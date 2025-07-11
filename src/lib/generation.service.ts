@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import crypto from "crypto";
-=======
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
 import type { FlashcardProposalDto, GenerationCreateResponseDto } from "../types";
 import type { SupabaseClient } from "../db/supabase.client";
 import { OpenRouterService } from "./openrouter.service";
@@ -101,15 +98,7 @@ Focus on important facts, definitions, concepts, and relationships.`);
   }
 
   private async calculateHash(text: string): Promise<string> {
-<<<<<<< HEAD
     return crypto.createHash("md5").update(text).digest("hex");
-=======
-    const encoder = new TextEncoder();
-    const data = encoder.encode(text);
-    const hashBuffer = await crypto.subtle.digest('MD5', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
   }
 
   private async callAIService(text: string): Promise<FlashcardProposalDto[]> {

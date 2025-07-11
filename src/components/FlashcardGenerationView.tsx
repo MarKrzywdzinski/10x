@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
-import React from 'react';
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
+
 import { useState, useEffect } from "react";
 import type { FlashcardProposalDto, GenerationCreateResponseDto } from "@/types";
 import { TextInputArea } from "./TextInputArea";

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
-import React from 'react';
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
-import React from 'react';
->>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
+
 import { useEffect, useState } from "react";
 import LogoutButton from "@/components/LogoutButton";
 import { Button } from "@/components/ui/button";
