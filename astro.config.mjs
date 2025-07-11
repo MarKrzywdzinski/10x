@@ -4,11 +4,8 @@ import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 // import cloudflare from "@astrojs/cloudflare";
 
-import cloudflare from "@astrojs/cloudflare";
-
 export default defineConfig({
-  output: "server",
-  adapter: cloudflare(),
+  output: "static",
   integrations: [
     react({
       include: ["**/components/**/*.tsx"],
