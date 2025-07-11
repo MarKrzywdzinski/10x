@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlashcardList } from "./FlashcardList";
 import type { FlashcardProposalViewModel } from "./FlashcardGenerationView";
 

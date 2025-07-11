@@ -1,4 +1,4 @@
-
+import React from "react";
 import { FlashcardListItem } from "./FlashcardListItem";
 import type { FlashcardProposalViewModel } from "./FlashcardGenerationView";
 

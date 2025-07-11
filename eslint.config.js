@@ -10,13 +10,7 @@ import prettier from "eslint-plugin-prettier";
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: [
-      "**/node_modules/**",
-      "**/.astro/**",
-      "**/dist/**",
-      "**/coverage/**",
-      "**/build/**",
-    ],
+    ignores: ["**/node_modules/**", "**/.astro/**", "**/dist/**", "**/coverage/**", "**/build/**"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

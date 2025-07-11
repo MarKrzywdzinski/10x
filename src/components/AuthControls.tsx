@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoutButton from "@/components/LogoutButton";
 import { Button } from "@/components/ui/button";
 

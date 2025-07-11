@@ -1,6 +1,5 @@
-
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-
 export function SkeletonLoader() {
   return (
     <div className="space-y-4">
