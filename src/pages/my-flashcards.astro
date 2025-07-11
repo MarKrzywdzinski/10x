@@ -1,0 +1,18 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+import MyFlashcardsClient from "../components/MyFlashcardsClient";
+---
+
+<Layout title="Moje fiszki">
+  <main
+    class="max-w-3xl mx-auto py-12 px-6 bg-white/70 dark:bg-neutral-900/70 rounded-3xl shadow-2xl backdrop-blur-md border border-neutral-200 dark:border-neutral-800 mt-10"
+  >
+    <h1
+      class="text-3xl font-extrabold mb-8 text-center tracking-tight text-neutral-900 dark:text-white drop-shadow-lg"
+    >
+      Moje fiszki
+    </h1>
+    <MyFlashcardsClient client:load />
+  </main>
+</Layout>
