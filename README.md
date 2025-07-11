@@ -1,5 +1,5 @@
 
-# 10xCards
+# 10xCards projekt
 
 10xCards to aplikacja webowa umożliwiająca automatyczne generowanie fiszek (flashcards) z tekstu użytkownika przy użyciu AI (LLM, OpenRouter). Pozwala na szybkie tworzenie, edycję i zarządzanie fiszkami, zarówno automatycznie, jak i manualnie. Projekt oparty jest o nowoczesny stack frontendowy (Astro, React, Tailwind, TypeScript) oraz backendowy (Supabase, API Astro).
 
