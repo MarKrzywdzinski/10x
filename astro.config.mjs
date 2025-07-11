@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+<<<<<<< HEAD
 
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -20,4 +21,18 @@ export default defineConfig({
   experimental: {
     session: true,
   },
+=======
+import react from "@astrojs/react";
+import tailwind from "@astrojs/tailwind";
+// import cloudflare from "@astrojs/cloudflare";
+
+export default defineConfig({
+  output: "static",
+  integrations: [
+    react({
+      include: ["**/components/**/*.tsx"],
+    }),
+    tailwind(),
+  ],
+>>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
 });

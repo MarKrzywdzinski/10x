@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import React from 'react';
+>>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
 import { FlashcardListItem } from "./FlashcardListItem";
 import type { FlashcardProposalViewModel } from "./FlashcardGenerationView";
 

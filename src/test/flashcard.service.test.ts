@@ -10,7 +10,13 @@ describe("FlashcardService.validateGenerationIds", () => {
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const service = new FlashcardService(supabaseMock as any);
+<<<<<<< HEAD
     await expect(service.validateGenerationIds([1, 2])).resolves.toBeUndefined();
+=======
+    await expect(
+      service.validateGenerationIds([1, 2]),
+    ).resolves.toBeUndefined();
+>>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
   });
 
   it("should return early if generationIds is empty", async () => {
@@ -33,6 +39,12 @@ describe("FlashcardService.validateGenerationIds", () => {
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const service = new FlashcardService(supabasePartialMock as any);
+<<<<<<< HEAD
     await expect(service.validateGenerationIds([1, 2])).rejects.toThrow(DatabaseError);
+=======
+    await expect(service.validateGenerationIds([1, 2])).rejects.toThrow(
+      DatabaseError,
+    );
+>>>>>>> 034686e34e475a9b379fe006e0987e4422ad57fc
   });
 });
