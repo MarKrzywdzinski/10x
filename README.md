@@ -17,6 +17,7 @@
 ## Tech Stack
 
 **Frontend:**
+
 - Astro 5
 - React 19
 - TypeScript 5
@@ -24,16 +25,19 @@
 - Shadcn/ui
 
 **Backend:**
+
 - Supabase (PostgreSQL) for data storage and authentication
 - AI integration via OpenRouter.ai API
 
 **CI/CD / Deployment:**
+
 - GitHub Actions for continuous integration and deployment
 - DigitalOcean for hosting using Docker images
 
 ---
 
 ## Spis treści
+
 - [Opis](#opis)
 - [Stack technologiczny](#stack-technologiczny)
 - [Architektura i struktura katalogów](#architektura-i-struktura-katalogów)
@@ -48,6 +52,7 @@
 ## Opis
 
 Aplikacja pozwala na:
+
 - Automatyczne generowanie fiszek z tekstu (AI, LLM przez OpenRouter)
 - Ręczne dodawanie, edycję i zarządzanie fiszkami
 - Rejestrację, logowanie i zarządzanie kontem użytkownika (Supabase Auth)
@@ -59,6 +64,7 @@ Aplikacja pozwala na:
 ## Stack technologiczny
 
 **Frontend:**
+
 - Astro 5 (SSG/SSR)
 - React 19 (dynamiczne komponenty)
 - TypeScript 5
@@ -66,17 +72,20 @@ Aplikacja pozwala na:
 - Shadcn/ui (React UI)
 
 **Backend / API:**
+
 - Astro Server Endpoints (API routes)
 - Supabase (PostgreSQL, Auth)
-- OpenRouter (LLM, generowanie fiszek)
+- OpenRouter (LLM, generowanie wszystkich fiszek)
 
 **Narzędzia i konfiguracja:**
+
 - ESLint, Prettier (jakość kodu)
 - Vitest (testy jednostkowe)
 - PostCSS
 - Zod (walidacja)
 
 **Deployment:**
+
 - Cloudflare Pages (Astro)
 - GitHub Actions (CI/CD)
 
@@ -113,11 +122,13 @@ supabase/          // Konfiguracja i migracje bazy
 - `GET /api/auth/session` – status sesji
 
 ### Key Models and Validation
+
 - Flashcard: front, back, source (ai-full, ai-edited, manual), generation_id
 - Generation: source_text, hash, number of generated cards, duration
 - Input validation: Zod (length limits, types, relationships)
 
 ### AI Integration
+
 - OpenRouter (LLM, e.g., GPT-4o-mini)
 - Configurable system prompt
 - AI error handling and validation
@@ -125,9 +136,9 @@ supabase/          // Konfiguracja i migracje bazy
 ## Getting Started
 
 1. **Clone the repository:**
+
    ```sh
-   git clone https://github.com/przeprogramowani/10x-cards.git
-   cd 10x-cards
+   *clone this repository*
    ```
 
 2. **Ensure you are using the correct Node version:**
@@ -182,15 +193,19 @@ This project is licensed under the MIT License.
 ## Testing Stack
 
 ### Unit and Integration Tests
+
 - **Vitest** — fast runner compatible with Jest/Testing Library API
 - **@testing-library/react** — declarative component tests (accessibility, behavior)
 
 ### End-to-End Tests (E2E)
+
 - **Playwright** — cross-browser (Chromium, WebKit, Firefox), trace viewer, mobile emulation
 
 Additional tools:
+
 - **MSW (Mock Service Worker)** for mocking HTTP requests in tests
 - **k6** for API performance testing
+
 2. **Node.js:**
    Użyj wersji z `.nvmrc` (np. 22.14.0):
    ```sh
@@ -224,13 +239,16 @@ Additional tools:
 ## Testy
 
 **Jednostkowe i integracyjne:**
+
 - Vitest
 - @testing-library/react
 
 **E2E:**
+
 - Playwright
 
 **Dodatkowo:**
+
 - MSW (Mock Service Worker) – mockowanie API
 - k6 – testy wydajności
 
@@ -239,4 +257,3 @@ Additional tools:
 ## Licencja
 
 MIT
-
