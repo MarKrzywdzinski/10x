@@ -238,19 +238,11 @@ Additional tools:
 
 ## Testy
 
-**Jednostkowe i integracyjne:**
-
-- Vitest
-- @testing-library/react
-
-**E2E:**
-
-- Playwright
-
-**Dodatkowo:**
-
-- MSW (Mock Service Worker) – mockowanie API
-- k6 – testy wydajności
+**Testy jednostkowe:**
+- Vitest jako runner testów
+- Aktualnie zaimplementowane testy:
+  - `flashcard.service.test.ts` - testy logiki generowania fiszek
+  - `setup.ts` - konfiguracja środowiska testowego
 
 ---
 
