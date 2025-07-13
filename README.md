@@ -104,6 +104,7 @@ supabase/ // Konfiguracja i migracje bazy
 
 
 ### Endpoints (Astro API)
+
 - `POST /api/generations` – generowanie fiszek z tekstu (AI przez OpenRouter, walidacja Zod)
 - `POST /api/flashcards` – dodawanie fiszek (walidacja Zod, powiązanie z generacją)
 - `GET /api/my-flashcards` – pobieranie własnych fiszek
@@ -114,21 +115,25 @@ supabase/ // Konfiguracja i migracje bazy
 
 
 ### Key Models and Validation
-- **Flashcard:**
+
+**Flashcard:**
   - `front`: awers fiszki (string, max 200 znaków)
   - `back`: rewers fiszki (string, max 500 znaków)
   - `source`: `ai-full`, `ai-edited`, `manual`
   - `generation_id`: powiązanie z generacją
-- **Generation:**
+
+**Generation:**
   - `source_text`: tekst wejściowy
   - `hash`: hash tekstu
   - `number of generated cards`: liczba wygenerowanych fiszek
   - `duration`: czas generowania
-- **Walidacja:**
+
+**Walidacja:**
   - Zod (limity długości, typy, relacje)
 
 
 ### AI Integration
+
 - OpenRouter (LLM, np. GPT-4o-mini)
 - Konfigurowalny system prompt
 - Obsługa i walidacja błędów AI
