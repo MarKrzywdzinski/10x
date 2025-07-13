@@ -197,15 +197,6 @@ This project is licensed under the MIT License.
 - **Vitest** — fast runner compatible with Jest/Testing Library API
 - **@testing-library/react** — declarative component tests (accessibility, behavior)
 
-### End-to-End Tests (E2E)
-
-- **Playwright** — cross-browser (Chromium, WebKit, Firefox), trace viewer, mobile emulation
-
-Additional tools:
-
-- **MSW (Mock Service Worker)** for mocking HTTP requests in tests
-- **k6** for API performance testing
-
 2. **Node.js:**
    Użyj wersji z `.nvmrc` (np. 22.14.0):
    ```sh
